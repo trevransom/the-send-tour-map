@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a94c121070eebb2cadd5bb2b3224db96 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_a94c121070eebb2cadd5bb2b3224db96" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a94c121070eebb2cadd5bb2b3224db96 = L.map(
+                "map_a94c121070eebb2cadd5bb2b3224db96",
+                {
+                    center: [64.0, 26.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 6,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a7cf8d2cfacee934a2c2a7be971111ba = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_a7cf8d2cfacee934a2c2a7be971111ba.addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            var marker_72e927f5bdeef8f6877a0a63a49eeaf9 = L.marker(
+                [60.1674881, 24.9427473],
+                {}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            var icon_0e856644632a3892abcdea4eae13442d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_72e927f5bdeef8f6877a0a63a49eeaf9.setIcon(icon_0e856644632a3892abcdea4eae13442d);
+        
+    
+        var popup_69a1bc45c1b27f24d8529f03b2bf0d54 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_51304aedbe91dadb2f5ebf5b1d129631 = $(`<div id="html_51304aedbe91dadb2f5ebf5b1d129631" style="width: 100.0%; height: 100.0%;">Team: Team A<br>City: Helsinki<br>Date: 2024-05-01<br>Responses: 150<br>Attendance: 500</div>`)[0];
+                popup_69a1bc45c1b27f24d8529f03b2bf0d54.setContent(html_51304aedbe91dadb2f5ebf5b1d129631);
+            
+        
+
+        marker_72e927f5bdeef8f6877a0a63a49eeaf9.bindPopup(popup_69a1bc45c1b27f24d8529f03b2bf0d54)
+        ;
+
+        
+    
+    
+            marker_72e927f5bdeef8f6877a0a63a49eeaf9.bindTooltip(
+                `<div>
+                     <b>Helsinki</b> on 2024-05-01
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_528ca3fe94595251933f86e153b65a88 = L.marker(
+                [60.2047672, 24.6568435],
+                {}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            var icon_8d70f3bb0015f5f06a2c17a49cc63988 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_528ca3fe94595251933f86e153b65a88.setIcon(icon_8d70f3bb0015f5f06a2c17a49cc63988);
+        
+    
+        var popup_a36ff01122c5c77b07fe38f8f09cbd8d = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_c0e15d16635b76aceca0c9f3dcd437f2 = $(`<div id="html_c0e15d16635b76aceca0c9f3dcd437f2" style="width: 100.0%; height: 100.0%;">Team: Team A<br>City: Espoo<br>Date: 2024-05-02<br>Responses: 200<br>Attendance: 450</div>`)[0];
+                popup_a36ff01122c5c77b07fe38f8f09cbd8d.setContent(html_c0e15d16635b76aceca0c9f3dcd437f2);
+            
+        
+
+        marker_528ca3fe94595251933f86e153b65a88.bindPopup(popup_a36ff01122c5c77b07fe38f8f09cbd8d)
+        ;
+
+        
+    
+    
+            marker_528ca3fe94595251933f86e153b65a88.bindTooltip(
+                `<div>
+                     <b>Espoo</b> on 2024-05-02
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_182c25b728909f55a29157fa4a256322 = L.marker(
+                [61.4980214, 23.7603118],
+                {}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            var icon_e1c548bd28cd4f0e815c34d0a619ee1a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_182c25b728909f55a29157fa4a256322.setIcon(icon_e1c548bd28cd4f0e815c34d0a619ee1a);
+        
+    
+        var popup_3d55a780a464e5230a285045ab28afd8 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_a12226ee126fa6c4dbc91a2d9e9dfaa7 = $(`<div id="html_a12226ee126fa6c4dbc91a2d9e9dfaa7" style="width: 100.0%; height: 100.0%;">Team: Team A<br>City: Tampere<br>Date: 2024-05-03<br>Responses: 180<br>Attendance: 600</div>`)[0];
+                popup_3d55a780a464e5230a285045ab28afd8.setContent(html_a12226ee126fa6c4dbc91a2d9e9dfaa7);
+            
+        
+
+        marker_182c25b728909f55a29157fa4a256322.bindPopup(popup_3d55a780a464e5230a285045ab28afd8)
+        ;
+
+        
+    
+    
+            marker_182c25b728909f55a29157fa4a256322.bindTooltip(
+                `<div>
+                     <b>Tampere</b> on 2024-05-03
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_15a6e355dcf401bb52b6fd061227bbcf = L.polyline(
+                [[60.1674881, 24.9427473], [60.2047672, 24.6568435], [61.4980214, 23.7603118]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            poly_line_15a6e355dcf401bb52b6fd061227bbcf.bindTooltip(
+                `<div>
+                     Team A Route
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_46cdc13bf9d55cda197914b9d03ce941 = L.marker(
+                [60.1674881, 24.9427473],
+                {}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            var icon_0b0354f917f0db80d7a7b2c7d6d925a3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_46cdc13bf9d55cda197914b9d03ce941.setIcon(icon_0b0354f917f0db80d7a7b2c7d6d925a3);
+        
+    
+        var popup_c666e0edeb875d0bd0dedb242a41184f = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_464d4bfbf301ee056a54d703b0bdc340 = $(`<div id="html_464d4bfbf301ee056a54d703b0bdc340" style="width: 100.0%; height: 100.0%;">Team: Team B<br>City: Helsinki<br>Date: 2024-05-01<br>Responses: 300<br>Attendance: 700</div>`)[0];
+                popup_c666e0edeb875d0bd0dedb242a41184f.setContent(html_464d4bfbf301ee056a54d703b0bdc340);
+            
+        
+
+        marker_46cdc13bf9d55cda197914b9d03ce941.bindPopup(popup_c666e0edeb875d0bd0dedb242a41184f)
+        ;
+
+        
+    
+    
+            marker_46cdc13bf9d55cda197914b9d03ce941.bindTooltip(
+                `<div>
+                     <b>Helsinki</b> on 2024-05-01
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_8b2270339fe1015c76ca3a210daf4fdc = L.marker(
+                [60.4517531, 22.2670522],
+                {}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            var icon_bc685227248d3dab2fed7656464fc0f7 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_8b2270339fe1015c76ca3a210daf4fdc.setIcon(icon_bc685227248d3dab2fed7656464fc0f7);
+        
+    
+        var popup_879b7835ac71fdf37a6961222fb7c7ab = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_e4e496082012f9cf0bcbb04367366d44 = $(`<div id="html_e4e496082012f9cf0bcbb04367366d44" style="width: 100.0%; height: 100.0%;">Team: Team B<br>City: Turku<br>Date: 2024-05-02<br>Responses: 250<br>Attendance: 550</div>`)[0];
+                popup_879b7835ac71fdf37a6961222fb7c7ab.setContent(html_e4e496082012f9cf0bcbb04367366d44);
+            
+        
+
+        marker_8b2270339fe1015c76ca3a210daf4fdc.bindPopup(popup_879b7835ac71fdf37a6961222fb7c7ab)
+        ;
+
+        
+    
+    
+            marker_8b2270339fe1015c76ca3a210daf4fdc.bindTooltip(
+                `<div>
+                     <b>Turku</b> on 2024-05-02
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_cc34516cc1bc321276f6f2796cd1a876 = L.marker(
+                [65.0118734, 25.4716809],
+                {}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            var icon_b0ae190d3fb6ddda049a514a31ee9aed = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_cc34516cc1bc321276f6f2796cd1a876.setIcon(icon_b0ae190d3fb6ddda049a514a31ee9aed);
+        
+    
+        var popup_3ef1e3cff161b07c188c01ad127633f3 = L.popup({"maxWidth": 300});
+
+        
+            
+                var html_2e862591f71fdd615312a140fcc7c115 = $(`<div id="html_2e862591f71fdd615312a140fcc7c115" style="width: 100.0%; height: 100.0%;">Team: Team B<br>City: Oulu<br>Date: 2024-05-03<br>Responses: 120<br>Attendance: 500</div>`)[0];
+                popup_3ef1e3cff161b07c188c01ad127633f3.setContent(html_2e862591f71fdd615312a140fcc7c115);
+            
+        
+
+        marker_cc34516cc1bc321276f6f2796cd1a876.bindPopup(popup_3ef1e3cff161b07c188c01ad127633f3)
+        ;
+
+        
+    
+    
+            marker_cc34516cc1bc321276f6f2796cd1a876.bindTooltip(
+                `<div>
+                     <b>Oulu</b> on 2024-05-03
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var poly_line_eb5b7a26f90bc9f31acda515aaced0cf = L.polyline(
+                [[60.1674881, 24.9427473], [60.4517531, 22.2670522], [65.0118734, 25.4716809]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 2.5}
+            ).addTo(map_a94c121070eebb2cadd5bb2b3224db96);
+        
+    
+            poly_line_eb5b7a26f90bc9f31acda515aaced0cf.bindTooltip(
+                `<div>
+                     Team B Route
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
+</html>
