@@ -1,35 +1,36 @@
-name: Update Tour Map
+name: Update Map
 
 on:
   push:
     branches:
-      - main
+      - main # or the branch you want to trigger the action on
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
-  update_map:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: "3.8"
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Flask app to process data and generate map
-        run: python app.py
-
-      - name: Commit and push updated map
+      - name: Generate Map
         run: |
-          git config --local user.email "your_email@example.com"
-          git config --local user.name "Your Name"
-          git add static/tour_map_finland.html
-          git commit -m "Update tour map"
-          git push
+          python app.py generate_map  # Adjust this to run the map generation
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./static # Directory containing your map.html
+          publish_branch: gh-pages # Branch to deploy to
