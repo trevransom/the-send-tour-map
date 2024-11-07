@@ -3,7 +3,4 @@ geopy==2.4.1
 osmnx
 networkx
 pandas
-flask
 openpyxl
-transformers
-torch
