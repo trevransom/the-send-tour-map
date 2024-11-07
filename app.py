@@ -207,7 +207,7 @@ def create_map(tour_data):
     '''
 
     m.get_root().html.add_child(folium.Element(legend_html))
-    m.save("map.html")
+    m.save("static/map.html")
 
 
 tour_plan_data = fetch_advance_data()
