@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_cb1c991c9f026393fc802098503e0dca {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+    <div style="
+    position: fixed; 
+    bottom: 10%; left: 5%; width: auto; max-width: 250px; height: auto; 
+    background-color: white; z-index:9999; font-size:16px;
+    border:2px solid grey; border-radius: 8px; padding: 15px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
+    <strong>Legend</strong><br>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <svg width="30" height="8">
+            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3;stroke-dasharray:5,5" />
+        </svg> 
+        <span style="margin-left: 8px;">Future Route</span>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <svg width="30" height="8">
+            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3" />
+        </svg> 
+        <span style="margin-left: 8px;">Past Route</span>
+    </div>
+    </div>
+    
+    
+            <div class="folium-map" id="map_cb1c991c9f026393fc802098503e0dca" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_cb1c991c9f026393fc802098503e0dca = L.map(
+                "map_cb1c991c9f026393fc802098503e0dca",
+                {
+                    center: [64.0, 26.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 6,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_4131dac8b9255b908487f89716c7157c = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_4131dac8b9255b908487f89716c7157c.addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var marker_d96b0bc385ef61c45e97e8652f981206 = L.marker(
+                [60.2526036, 24.0684575],
+                {}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var div_icon_30b92957832cece4f28834d7dced1ade = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_d96b0bc385ef61c45e97e8652f981206.setIcon(div_icon_30b92957832cece4f28834d7dced1ade);
+        
+    
+        var popup_3cc30af899266edaa64c581778c9997c = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_51bb53b560e56afd2ed1903d8f8209fb = $(`<div id="html_51bb53b560e56afd2ed1903d8f8209fb" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Lohja                  <br>                 <b>Team:</b> Lilja & Elsa                  <br>                 <b>Date:</b> 2023-12-31                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
+                popup_3cc30af899266edaa64c581778c9997c.setContent(html_51bb53b560e56afd2ed1903d8f8209fb);
+            
+        
+
+        marker_d96b0bc385ef61c45e97e8652f981206.bindPopup(popup_3cc30af899266edaa64c581778c9997c)
+        ;
+
+        
+    
+    
+            var poly_line_e3a97cf755d79eb62c8b09931512c01d = L.polyline(
+                [[60.2526036, 24.0684575], [66.5025657, 25.73122]],
+                {"bubblingMouseEvents": true, "color": "#1d34be", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#1d34be", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            poly_line_e3a97cf755d79eb62c8b09931512c01d.bindTooltip(
+                `<div>
+                     Lilja & Elsa reitti
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_90713df90638872c96568c78393c66d2 = L.marker(
+                [66.5025657, 25.73122],
+                {}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var div_icon_e1d859d9dd42db3a051368022611124f = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_90713df90638872c96568c78393c66d2.setIcon(div_icon_e1d859d9dd42db3a051368022611124f);
+        
+    
+        var popup_b2d18fa981c1d028cb42a00727eade62 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_b3cad8bb08f01606c97f2a6c9294a927 = $(`<div id="html_b3cad8bb08f01606c97f2a6c9294a927" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Rovaniemi                  <br>                 <b>Team:</b> Lilja & Elsa                  <br>                 <b>Date:</b> 2024-11-21             </div>`)[0];
+                popup_b2d18fa981c1d028cb42a00727eade62.setContent(html_b3cad8bb08f01606c97f2a6c9294a927);
+            
+        
+
+        marker_90713df90638872c96568c78393c66d2.bindPopup(popup_b2d18fa981c1d028cb42a00727eade62)
+        ;
+
+        
+    
+    
+            var marker_879de22f6b4feb35ece8e3a965358b5e = L.marker(
+                [62.2417066, 25.7495727],
+                {}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var div_icon_81efb91ca82d475af6174817f9d3762b = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_879de22f6b4feb35ece8e3a965358b5e.setIcon(div_icon_81efb91ca82d475af6174817f9d3762b);
+        
+    
+        var popup_c5a6a93b8734db9fef3d9e373cbac5b2 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_e4bcccb8bab23a6f30bf3570e8686999 = $(`<div id="html_e4bcccb8bab23a6f30bf3570e8686999" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Jyväskylä                  <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Date:</b> 2022-11-21                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
+                popup_c5a6a93b8734db9fef3d9e373cbac5b2.setContent(html_e4bcccb8bab23a6f30bf3570e8686999);
+            
+        
+
+        marker_879de22f6b4feb35ece8e3a965358b5e.bindPopup(popup_c5a6a93b8734db9fef3d9e373cbac5b2)
+        ;
+
+        
+    
+    
+            var poly_line_fed246f45d69310d9edabc124f2b129b = L.polyline(
+                [[62.2417066, 25.7495727], [60.4517531, 22.2670522]],
+                {"bubblingMouseEvents": true, "color": "#facf50", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#facf50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            poly_line_fed246f45d69310d9edabc124f2b129b.bindTooltip(
+                `<div>
+                     Pellot on valmiit reitti
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_b1bd0af999753d526150102114eeb598 = L.marker(
+                [60.4517531, 22.2670522],
+                {}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var div_icon_6f34d2cf3ce1713956cb040e13637fc7 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_b1bd0af999753d526150102114eeb598.setIcon(div_icon_6f34d2cf3ce1713956cb040e13637fc7);
+        
+    
+        var popup_40d6e726dd89dfe03586a2d7cb2ce053 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_b23a426e65650780365627c74b387969 = $(`<div id="html_b23a426e65650780365627c74b387969" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Turku                  <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Date:</b> 2023-12-31                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
+                popup_40d6e726dd89dfe03586a2d7cb2ce053.setContent(html_b23a426e65650780365627c74b387969);
+            
+        
+
+        marker_b1bd0af999753d526150102114eeb598.bindPopup(popup_40d6e726dd89dfe03586a2d7cb2ce053)
+        ;
+
+        
+    
+    
+            var poly_line_02dd3b1329297bb8c971b0b5e3436cc7 = L.polyline(
+                [[60.4517531, 22.2670522], [63.0957722, 21.6159187]],
+                {"bubblingMouseEvents": true, "color": "#facf50", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#facf50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            poly_line_02dd3b1329297bb8c971b0b5e3436cc7.bindTooltip(
+                `<div>
+                     Pellot on valmiit reitti
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_22fe2462e58b9fd9f70837a2ad161f4c = L.marker(
+                [63.0957722, 21.6159187],
+                {}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var div_icon_db69d6fd5e80056930bbffb6c23a03b2 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_22fe2462e58b9fd9f70837a2ad161f4c.setIcon(div_icon_db69d6fd5e80056930bbffb6c23a03b2);
+        
+    
+        var popup_a5feffcd757fea85f1321d0ed8cbaada = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_bf2388d8ff80dcf785d7fa6ec2a82257 = $(`<div id="html_bf2388d8ff80dcf785d7fa6ec2a82257" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Vaasa                  <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Date:</b> 2024-11-21             </div>`)[0];
+                popup_a5feffcd757fea85f1321d0ed8cbaada.setContent(html_bf2388d8ff80dcf785d7fa6ec2a82257);
+            
+        
+
+        marker_22fe2462e58b9fd9f70837a2ad161f4c.bindPopup(popup_a5feffcd757fea85f1321d0ed8cbaada)
+        ;
+
+        
+    
+    
+            var marker_911bd181d17930d407ec3bdb00e99181 = L.marker(
+                [60.9826014, 25.6613764],
+                {}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var div_icon_371af55c0c2cd8ab4c2d084758d12e61 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_911bd181d17930d407ec3bdb00e99181.setIcon(div_icon_371af55c0c2cd8ab4c2d084758d12e61);
+        
+    
+        var popup_e5a69464e069233ed3cd69d8838e0315 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_0ef789107fb051371ca75c08553e2ec3 = $(`<div id="html_0ef789107fb051371ca75c08553e2ec3" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Lahti                  <br>                 <b>Team:</b> Riders FC                  <br>                 <b>Date:</b> 2023-12-31                                  <br><b>Responses:</b> Huge man! big vibes!<br>                     <b>Attendance:</b> 23.0<br>                 </div>`)[0];
+                popup_e5a69464e069233ed3cd69d8838e0315.setContent(html_0ef789107fb051371ca75c08553e2ec3);
+            
+        
+
+        marker_911bd181d17930d407ec3bdb00e99181.bindPopup(popup_e5a69464e069233ed3cd69d8838e0315)
+        ;
+
+        
+    
+    
+            var poly_line_cc41065fe365a6b2b15c4b9d0d51f28c = L.polyline(
+                [[60.9826014, 25.6613764], [60.1674881, 24.9427473]],
+                {"bubblingMouseEvents": true, "color": "#fa0015", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fa0015", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            poly_line_cc41065fe365a6b2b15c4b9d0d51f28c.bindTooltip(
+                `<div>
+                     Riders FC reitti
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_02a3bfadb23544e9e83c722fddd1ddca = L.marker(
+                [60.1674881, 24.9427473],
+                {}
+            ).addTo(map_cb1c991c9f026393fc802098503e0dca);
+        
+    
+            var div_icon_ff1d6b8b329880697287508b3e86e95e = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_02a3bfadb23544e9e83c722fddd1ddca.setIcon(div_icon_ff1d6b8b329880697287508b3e86e95e);
+        
+    
+        var popup_54aa29a3db35bcf791771fd93930957c = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_89347448ac6c2b2630ce27f264ececdb = $(`<div id="html_89347448ac6c2b2630ce27f264ececdb" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Helsinki                  <br>                 <b>Team:</b> Riders FC                  <br>                 <b>Date:</b> 2024-03-01                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
+                popup_54aa29a3db35bcf791771fd93930957c.setContent(html_89347448ac6c2b2630ce27f264ececdb);
+            
+        
+
+        marker_02a3bfadb23544e9e83c722fddd1ddca.bindPopup(popup_54aa29a3db35bcf791771fd93930957c)
+        ;
+
+        
+    
+</script>
+</html>

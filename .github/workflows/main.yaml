@@ -25,12 +25,15 @@ jobs:
           pip install -r requirements.txt
 
       - name: Generate Map
+        env:
+          TYPEFORM_API_KEY: ${{ secrets.TYPEFORM_API_KEY }}
+          TYPEFORM_FORM_ID: ${{ secrets.TYPEFORM_FORM_ID }}
         run: |
-          python app.py generate_map  # Adjust this to run the map generation
+          python app.py   # Adjust this to run the map generation
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./static # Directory containing your map.html
+          publish_dir: ./ # Directory containing your map.html
           publish_branch: gh-pages # Branch to deploy to

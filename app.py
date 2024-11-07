@@ -1,120 +1,83 @@
-from flask import Flask, request, jsonify
+import pytz
 import folium
+import random
 from geopy.geocoders import Nominatim
-import osmnx as ox
-import networkx as nx
-# Define function to get city coordinates
 import folium
 from folium import Popup, Tooltip
 from itertools import cycle
 import os
-# Ok our goal is to map tour team movement and routes with highlights for each stop
-# our input will be a datafram conttaining the city, # of responses, attendence #, date
-# there will be multiple tour teams
-# would be nice to have color coded routes for each team
-# this is all in finland
 import pandas as pd
-from flask import Flask, request, jsonify, send_from_directory
+import requests
 
-app = Flask(__name__)
+random.seed(0)
 
-# Initialize the DataFrame to hold tour data
-tour_data = pd.DataFrame(columns=["City", "Team", "Responses", "Attendance", "Date"])
-tour_data = pd.DataFrame({
-    "City": ["Helsinki", "Espoo", "Tampere", "Helsinki", "Turku", "Oulu"],
-    "Team": ["Team A", "Team A", "Team A", "Team B", "Team B", "Team B"],
-    "Responses": [150, 200, 180, 300, 250, 120],
-    "Attendance": [500, 450, 600, 700, 550, 500],
-    "Date": ["2024-05-01", "2024-05-02", "2024-05-03", "2024-05-01", "2024-05-02", "2024-05-03"]
-})
+TYPEFORM_API_KEY = os.getenv("TYPEFORM_API_KEY")
+TYPEFORM_FORM_ID = os.getenv("TYPEFORM_FORM_ID")
 
 
-@app.route('/webhook', methods=['POST'])
-def typeform_webhook():
-    global tour_data
-    data = request.json
-    # Parse the Typeform response
-    for response in data['form_response']['answers']:
-        if response['type'] == 'text':  # Assuming text type for cities and teams
-            city = response.get('text', '')
-            team = response.get('team', '')
-            responses = response.get('responses', 0)
-            attendance = response.get('attendance', 0)
-            date = response.get('date', '')
+def fetch_advance_data():
+    df = pd.read_excel("./data/TOUR TEAM PLAN.xlsx", sheet_name=None)
 
-            # Append new data to the DataFrame
-            new_entry = pd.DataFrame({
-                "City": [city],
-                "Team": [team],
-                "Responses": [responses],
-                "Attendance": [attendance],
-                "Date": [date]
-            })
-            tour_data = pd.concat([tour_data, new_entry], ignore_index=True)
-            # Call the function to generate the map after updating
-    create_map()
+    all_sheets = []
+    list_names = []
+    for name, sheet in df.items():
+        sheet['Team'] = name
+        list_names.append(name)
+        sheet = sheet.rename(columns=lambda x: x.split('\n')[-1])
+        all_sheets.append(sheet)
 
-    return jsonify({"status": "success"}), 200
+    df = pd.concat(all_sheets)
+    return df
 
 
-@app.route('/mock_webhook', methods=['POST'])
-def mock_typeform_webhook():
-    global tour_data
+def fetch_typeform_data():
+    url = f"https://api.typeform.com/forms/{TYPEFORM_FORM_ID}/responses"
+    headers = {
+        "Authorization": f"Bearer {TYPEFORM_API_KEY}"
+    }
+    response = requests.get(url, headers=headers)
 
-    # Simulate incoming data
-    mock_data = {
-        "form_response": {
-            "answers": [
-                {"field": {"id": "city_field_id"}, "text": "Lahti"},
-                {"field": {"id": "team_field_id"}, "text": "Team A"},
-                {"field": {"id": "responses_field_id"}, "number": 10},
-                {"field": {"id": "attendance_field_id"}, "number": 8},
-                {"field": {"id": "date_field_id"}, "text": "2024-11-05"}
-            ]
+    if response.status_code != 200:
+        print("Failed to fetch data:", response.status_code, response.text)
+        return None
+
+    data = response.json()
+    return data['items']
+
+
+def process_data(data, plan_data):
+    # make sure the data upserts teh plan data
+    # Example: Extract city, responses, attendance, date, and team from Typeform responses
+    records = []
+    for item in data:
+        fields = {ans["field"]["ref"]: ans[ans["type"]] for ans in item['answers']}
+        # lets format the event date here too
+
+        record = {
+            # "email": fields.get("email"),
+            "City": fields.get("city"),
+            "Team": fields.get("tour_team"),
+            "Recap": fields.get("recap"),
+            "Attendance": fields.get("attendance"),
+            "Date": fields.get("event_date"),
+            "Church": fields.get("church"),
         }
-    }
+        records.append(record)
 
-    # Process mock data
-    for answer in mock_data["form_response"]["answers"]:
-        if answer["field"]["id"] == "city_field_id":
-            city = answer["text"]
-        elif answer["field"]["id"] == "team_field_id":
-            team = answer["text"]
-        elif answer["field"]["id"] == "responses_field_id":
-            responses = answer["number"]
-        elif answer["field"]["id"] == "attendance_field_id":
-            attendance = answer["number"]
-        elif answer["field"]["id"] == "date_field_id":
-            date = answer["text"]
+    # Create a DataFrame and convert it to JSON
+    typeform_df = pd.DataFrame(records)
+    typeform_df['Date'] = pd.to_datetime(typeform_df['Date'], format='mixed', utc=True)
+    plan_data['Date'] = pd.to_datetime(plan_data['Date'], format='mixed', utc=True)
 
-    # Update DataFrame with the simulated data
-    new_row = {
-        "City": city,
-        "Team": team,
-        "Responses": responses,
-        "Attendance": attendance,
-        "Date": date
-    }
-    # tour_data = tour_data.append(new_row, ignore_index=True)
-    new_df = pd.DataFrame([new_row])
-    tour_data = pd.concat([tour_data, new_df], ignore_index=True)
-
-    print(tour_data.head())
-    # sys
-
-    # Call the function to generate the map after updating
-    create_map()
-
-    return jsonify({"status": "success"}), 200
+    df = pd.concat([typeform_df, plan_data]).drop_duplicates(
+        subset=['Date', 'Team'],
+        keep='first',
+        ignore_index=True
+    )
+    return df
 
 
-def create_map():
-    global tour_data
-
-    # Sample data
-
-    print(tour_data.head())
-    # Initialize geolocator
+def create_map(tour_data):
     geolocator = Nominatim(user_agent="tour_mapper")
 
     # Get coordinates for each city and add to the DataFrame
@@ -124,50 +87,132 @@ def create_map():
     tour_data["Longitude"] = tour_data["Coordinates"].apply(
         lambda loc: loc.longitude if loc else None)
     tour_data.drop(columns="Coordinates", inplace=True)
+    from datetime import datetime, timedelta
+    # tour_data
+    # tour_data['Date'] = pd.to_datetime(tour_data['Date'], errors="coerce")
+    print(tour_data)
+    tour_data = tour_data[tour_data['Date'] <= datetime.now(pytz.UTC) + timedelta(days=30)]
+    print(tour_data)
 
     # Define color palette for each team
     colors = cycle(["blue", "green", "red", "purple", "orange", "darkred", "darkblue"])
+    red = "#fa0015"
+    yellow = "#facf50"
+    # ooo could we do gradients for these routes instead?
+    send_colors = cycle([red, yellow, "#1d34be"])
+
+    team_colors = dict(zip(tour_data["Team"].unique(), send_colors))
 
     # Initialize map centered in Finland
     m = folium.Map(location=[64.0, 26.0], zoom_start=6)
 
-    # Plot data for each team
-    for team, color in zip(tour_data["Team"].unique(), colors):
-        team_data = tour_data[tour_data["Team"] == team]
+    city_visit_counts = tour_data.groupby('City')['Team'].nunique().reset_index(name='team_count')
 
-        # Plot each city stop with a marker
-        for _, row in team_data.iterrows():
-            tooltip = Tooltip(f"<b>{row['City']}</b> on {row['Date']}")
-            popup = Popup(
-                f"Team: {team}<br>City: {row['City']}<br>Date: {row['Date']}<br>"
-                f"Responses: {row['Responses']}<br>Attendance: {row['Attendance']}",
-                max_width=300
-            )
+    # Filter for cities visited by more than one team
+    multiple_team_cities = city_visit_counts[city_visit_counts['team_count'] > 1]
+    multiple_visit_list = multiple_team_cities["City"].tolist()
+
+    OFFSET = 0.03
+
+    # Group by team and plot routes
+    for team_index, (team, team_data) in enumerate(tour_data.groupby("Team")):
+        # Sort cities by date to draw lines in order of travel
+        team_data = team_data.sort_values("Date")
+        route_coords = []
+
+        # Add markers for each stop, offsetting if necessary
+        for i, (_, row) in enumerate(team_data.iterrows()):
+            frand = 0
+            IN_FUTURE = True if row['Date'] > datetime.now(pytz.utc) else False
+
+            if row["City"] in multiple_visit_list:
+                frand = random.uniform(0, OFFSET)
+
+            print(team, i, row["City"], frand * team_index)
+            offset_lat = row["Latitude"]
+            offset_lon = row["Longitude"] - frand * team_index
+            route_coords.append([offset_lat, offset_lon])
+            if i > 0:
+                route_coords_sub = [route_coords[i-1], route_coords[i]]
+                line_style = '5, 5' if IN_FUTURE else None
+                print(line_style)
+                # folium.PolyLine(segment_coords, color=color, weight=5, opacity=0.8).add_to(m)
+                folium.PolyLine(
+                    route_coords_sub,
+                    color=team_colors[team],
+                    dash_array=line_style,
+                    weight=3,
+                    opacity=1,
+                    tooltip=f"{team} reitti"
+                ).add_to(m)
+
+            marker_text = f"""
+                <b>City:</b> {row['City']}
+
+                <br>
+                <b>Team:</b> {row['Team']}
+
+                <br>
+                <b>Date:</b> {row['Date'].strftime('%Y-%m-%d')
+                              if pd.notnull(row['Date']) else "Date not available"}
+            """
+
+            if not IN_FUTURE:
+                marker_text += f"""
+                    <br><b>Responses:</b> {row['Recap']}<br>
+                    <b>Attendance:</b> {row['Attendance']}<br>
+                """
+
+            # Place a fire emoji marker for each stop
             folium.Marker(
-                location=[row["Latitude"], row["Longitude"]],
-                tooltip=tooltip,
-                popup=popup,
-                icon=folium.Icon(color=color)
+                location=[offset_lat, offset_lon],
+                popup=folium.Popup(marker_text, max_width=250),
+                # tooltip=folium.Tooltip(marker_text, ),
+                # icon=folium.Icon(color="orange", icon="fire", prefix='fa')
+                # icon=folium.DivIcon(
+                #    icon_size=(20, 20),
+                #    html='<div style="font-size: 20px;">🔥</div>'
+                # )
+                icon=folium.DivIcon(
+                    html=(
+                        '<div style="font-size:24px; color:red; text-align:center; '
+                        'transform: translate(-50%, -50%);">🔥</div>'
+                    )
+                )
             ).add_to(m)
 
-        # Draw route line connecting stops for each team
-        route_coords = list(zip(team_data["Latitude"], team_data["Longitude"]))
-        folium.PolyLine(
-            route_coords,
-            color=color,
-            weight=2.5,
-            opacity=0.8,
-            tooltip=f"{team} Route"
-        ).add_to(m)
     # Save the map to the static folder
-    map_path = os.path.join('static', 'tour_map_finland.html')
-    m.save(map_path)
+    # Add a legend to the map
+    legend_html = '''
+    <div style="
+    position: fixed; 
+    bottom: 10%; left: 5%; width: auto; max-width: 250px; height: auto; 
+    background-color: white; z-index:9999; font-size:16px;
+    border:2px solid grey; border-radius: 8px; padding: 15px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
+    <strong>Legend</strong><br>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <svg width="30" height="8">
+            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3;stroke-dasharray:5,5" />
+        </svg> 
+        <span style="margin-left: 8px;">Future Route</span>
+    </div>
+    <div style="display: flex; align-items: center; margin-top: 5px;">
+        <svg width="30" height="8">
+            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3" />
+        </svg> 
+        <span style="margin-left: 8px;">Past Route</span>
+    </div>
+    </div>
+    '''
+
+    m.get_root().html.add_child(folium.Element(legend_html))
+    m.save("map.html")
 
 
-@app.route('/map', methods=['GET'])
-def serve_map():
-    return send_from_directory('static', 'tour_map_finland.html')
-
-
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+tour_plan_data = fetch_advance_data()
+# print(tou)
+# sys
+results = fetch_typeform_data()
+tour_data = process_data(results, tour_plan_data)
+create_map(tour_data)
