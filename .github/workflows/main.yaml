@@ -41,4 +41,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./static # Directory containing your map.html
-          #publish_branch: gh-pages # Branch to deploy to
+          publish_branch: main # Branch to deploy to
