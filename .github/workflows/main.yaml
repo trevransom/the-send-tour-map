@@ -28,6 +28,10 @@ jobs:
         env:
           TYPEFORM_API_KEY: ${{ secrets.TYPEFORM_API_KEY }}
           TYPEFORM_FORM_ID: ${{ secrets.TYPEFORM_FORM_ID }}
+          TOUR_DATA_ONEDRIVE_URL: ${{ secrets.TOUR_DATA_ONEDRIVE_URL }}
+          MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
+          MICROSOFT_GRAPH_VALUE: ${{ secrets.MICROSOFT_GRAPH_VALUE }}
+          TENANT_ID: ${{ secrets.TENANT_ID }}
         run: |
           python app.py   # Adjust this to run the map generation
 

@@ -19,6 +19,7 @@ MICROSOFT_GRAPH_VALUE = os.getenv("MICROSOFT_GRAPH_VALUE")
 MICROSOFT_CLIENT_ID = os.getenv("MICROSOFT_CLIENT_ID")
 TOUR_DATA_ONEDRIVE_URL = os.getenv("TOUR_DATA_ONEDRIVE_URL")
 
+
 # need to fetch the excel from onedrive now
 # URL to get the access token
 token_url = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
