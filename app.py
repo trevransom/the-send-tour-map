@@ -8,15 +8,46 @@ from itertools import cycle
 import os
 import pandas as pd
 import requests
+from io import BytesIO
 
 random.seed(0)
 
 TYPEFORM_API_KEY = os.getenv("TYPEFORM_API_KEY")
 TYPEFORM_FORM_ID = os.getenv("TYPEFORM_FORM_ID")
+TENANT_ID = os.getenv("TENANT_ID")
+MICROSOFT_GRAPH_VALUE = os.getenv("MICROSOFT_GRAPH_VALUE")
+MICROSOFT_CLIENT_ID = os.getenv("MICROSOFT_CLIENT_ID")
+TOUR_DATA_ONEDRIVE_URL = os.getenv("TOUR_DATA_ONEDRIVE_URL")
+
+# need to fetch the excel from onedrive now
+# URL to get the access token
+token_url = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
+
+# Data required for the token request
+data = {
+    'grant_type': 'client_credentials',
+    'client_id': MICROSOFT_CLIENT_ID,
+    'client_secret': MICROSOFT_GRAPH_VALUE,
+    'scope': 'https://graph.microsoft.com/.default'
+}
+
+# Send the POST request to get the token
+response = requests.post(token_url, data=data)
+response_data = response.json()
+access_token = response_data.get('access_token')
 
 
 def fetch_advance_data():
-    df = pd.read_excel("./data/TOUR TEAM PLAN.xlsx", sheet_name=None)
+    # df = pd.read_excel("./data/TOUR TEAM PLAN.xlsx", sheet_name=None)
+    headers = {
+        'Authorization': f'Bearer {access_token}',
+        'Cache-Control': 'no-cache'
+    }
+    response = requests.get(TOUR_DATA_ONEDRIVE_URL, headers=headers)
+
+    file_content = BytesIO(response.content)
+    # df_dict = pd.read_excel(file_content, sheet_name=None#)
+    df = pd.read_excel(file_content, sheet_name=None)
 
     all_sheets = []
     list_names = []
@@ -104,7 +135,7 @@ def create_map(tour_data):
     team_colors = dict(zip(tour_data["Team"].unique(), send_colors))
 
     # Initialize map centered in Finland
-    m = folium.Map(location=[64.0, 26.0], zoom_start=6)
+    m = folium.Map(location=[64.0, 26.0], tiles="Cartodb Positron", zoom_start=6)
 
     city_visit_counts = tour_data.groupby('City')['Team'].nunique().reset_index(name='team_count')
 
