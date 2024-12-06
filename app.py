@@ -18,6 +18,7 @@ TENANT_ID = os.getenv("TENANT_ID")
 MICROSOFT_GRAPH_VALUE = os.getenv("MICROSOFT_GRAPH_VALUE")
 MICROSOFT_CLIENT_ID = os.getenv("MICROSOFT_CLIENT_ID")
 TOUR_DATA_ONEDRIVE_URL = os.getenv("TOUR_DATA_ONEDRIVE_URL")
+JAWA_MAP_API_KEY = os.getenv("JAWA_MAP_API_KEY")
 
 
 # need to fetch the excel from onedrive now
@@ -91,21 +92,33 @@ def process_data(data, plan_data):
             "Team": fields.get("tour_team"),
             "Recap": fields.get("recap"),
             "Attendance": fields.get("attendance"),
-            "Date": fields.get("event_date"),
+            "StartDate": fields.get("event_date"),
+            "EndDate": fields.get("event_end_date"),
             "Church": fields.get("church"),
         }
         records.append(record)
 
     # Create a DataFrame and convert it to JSON
     typeform_df = pd.DataFrame(records)
-    typeform_df['Date'] = pd.to_datetime(typeform_df['Date'], format='mixed', utc=True)
-    plan_data['Date'] = pd.to_datetime(plan_data['Date'], format='mixed', utc=True)
+    typeform_df['start_date'] = pd.to_datetime(typeform_df['StartDate'], format='mixed', utc=True)
+    typeform_df['end_date'] = pd.to_datetime(typeform_df['EndDate'], format='mixed', utc=True)
+
+    # Split the date ranges into start and end dates
+    plan_data[['start_date', 'end_date']] = plan_data['Date'].str.split('-', expand=True)
+    print(plan_data)
+    # Convert start_date and end_date to datetime, handling missing values in end_date
+    plan_data['start_date'] = pd.to_datetime(
+        plan_data['start_date'],
+        format='%d.%m.%Y', errors='coerce', utc=True)
 
     df = pd.concat([typeform_df, plan_data]).drop_duplicates(
-        subset=['Date', 'Team'],
+        subset=['start_date', 'Team'],
         keep='first',
         ignore_index=True
     )
+    df['end_date'] = pd.to_datetime(df['end_date'], format='%d.%m.%Y', errors='coerce', utc=True)
+    # i need logic to sort by the first date if there's a span
+    print(df)
     return df
 
 
@@ -123,20 +136,31 @@ def create_map(tour_data):
     # tour_data
     # tour_data['Date'] = pd.to_datetime(tour_data['Date'], errors="coerce")
     print(tour_data)
-    tour_data = tour_data[tour_data['Date'] <= datetime.now(pytz.UTC) + timedelta(days=30)]
+    tour_data = tour_data[tour_data['start_date'] <= datetime.now(pytz.UTC) + timedelta(days=50)]
     print(tour_data)
 
     # Define color palette for each team
     colors = cycle(["blue", "green", "red", "purple", "orange", "darkred", "darkblue"])
     red = "#fa0015"
     yellow = "#facf50"
+    team_names = tour_data["Team"].unique().tolist()
     # ooo could we do gradients for these routes instead?
     send_colors = cycle([red, yellow, "#1d34be"])
 
     team_colors = dict(zip(tour_data["Team"].unique(), send_colors))
 
     # Initialize map centered in Finland
-    m = folium.Map(location=[64.0, 26.0], tiles="Cartodb Positron", zoom_start=6)
+    # Free Option (lets test with this to save quota?)
+    # or do we wanna test quota?
+    # yeah lets test... stress test...
+    m = folium.Map(location=[64.0, 26.0], tiles=None, zoom_start=6)
+
+    # Quota Options
+    folium.TileLayer(
+        tiles="https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={JAWA_MAP_API_KEY}".format(
+            JAWA_MAP_API_KEY=JAWA_MAP_API_KEY),
+        attr="&copy; Esri &mdash; Source: Esri, USGS, NOAA",
+        control=False).add_to(m)
 
     city_visit_counts = tour_data.groupby('City')['Team'].nunique().reset_index(name='team_count')
 
@@ -145,17 +169,17 @@ def create_map(tour_data):
     multiple_visit_list = multiple_team_cities["City"].tolist()
 
     OFFSET = 0.03
-
     # Group by team and plot routes
     for team_index, (team, team_data) in enumerate(tour_data.groupby("Team")):
         # Sort cities by date to draw lines in order of travel
-        team_data = team_data.sort_values("Date")
+        team_data = team_data.sort_values("start_date")
         route_coords = []
+        fg = folium.FeatureGroup(name=team, overlay=False)
 
         # Add markers for each stop, offsetting if necessary
         for i, (_, row) in enumerate(team_data.iterrows()):
             frand = 0
-            IN_FUTURE = True if row['Date'] > datetime.now(pytz.utc) else False
+            IN_FUTURE = True if row['start_date'] > datetime.now(pytz.utc) else False
 
             if row["City"] in multiple_visit_list:
                 frand = random.uniform(0, OFFSET)
@@ -176,22 +200,29 @@ def create_map(tour_data):
                     weight=3,
                     opacity=1,
                     tooltip=f"{team} reitti"
-                ).add_to(m)
+                ).add_to(fg)
+                print(f"team-{team.replace(' ', '-')}")
 
+            # need to join the dates here if here
+            dates = f"{row['start_date'].strftime('%Y-%m-%d')}{' - '+row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else ''}"
             marker_text = f"""
                 <b>City:</b> {row['City']}
+                <br>
+                <b>Place:</b> {row['Church']}
+
 
                 <br>
                 <b>Team:</b> {row['Team']}
 
                 <br>
-                <b>Date:</b> {row['Date'].strftime('%Y-%m-%d')
-                              if pd.notnull(row['Date']) else "Date not available"}
+                <b>Start Date:</b> {row['start_date'].strftime('%Y-%m-%d') if pd.notnull(row['start_date']) else "-"}
+                <br>
+                <b>End Date:</b> {row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else "-"}
+                <br>
             """
 
             if not IN_FUTURE:
                 marker_text += f"""
-                    <br><b>Responses:</b> {row['Recap']}<br>
                     <b>Attendance:</b> {row['Attendance']}<br>
                 """
 
@@ -205,13 +236,15 @@ def create_map(tour_data):
                 #    icon_size=(20, 20),
                 #    html='<div style="font-size: 20px;">🔥</div>'
                 # )
+                id=team,  # Unique identifier
                 icon=folium.DivIcon(
                     html=(
-                        '<div style="font-size:24px; color:red; text-align:center; '
+                        f'<div id="{team}" style="font-size:24px; color:red; text-align:center; '
                         'transform: translate(-50%, -50%);">🔥</div>'
                     )
                 )
-            ).add_to(m)
+            ).add_to(fg)
+        fg.add_to(m)
 
     # Save the map to the static folder
     # Add a legend to the map
@@ -237,8 +270,51 @@ def create_map(tour_data):
     </div>
     </div>
     '''
+    # Add LayerControl for toggling
+    folium.LayerControl(position="bottomleft", collapsed=False).add_to(m)
 
-    m.get_root().html.add_child(folium.Element(legend_html))
+    # Add a dropdown menu for teams using HTML and JavaScript
+    dropdown_html = """
+    <div style="position: fixed; top: 10px; left: 10px; z-index: 1000; background-color: white; padding: 10px;">
+    <label for="team-dropdown">Select Team:</label>
+    <select id="team-dropdown" onchange="filterTeam()">
+        <option value="all">All Teams</option>
+        {}
+    </select>
+    </div>
+    <script>
+    function filterTeam() {{
+        var selectedTeam = document.getElementById('team-dropdown').value;
+
+        // Iterate through layers and toggle visibility
+        map.eachLayer(function (layer) {{
+        if (layer.options && layer.options.name) {{
+            if (selectedTeam === "all" || layer.options.name === selectedTeam) {{
+            map.addLayer(layer);
+            }} else {{
+            map.removeLayer(layer);
+            }}
+        }}
+        }});
+    }}
+    console.log(selectedTeam)
+    </script>
+    """.format(
+        "\n".join(f"<option value='{team}'>{team}</option>" for team in team_names)
+    )
+    print(team_names)
+
+    # Add the dropdown menu to the map
+    # folium.Element(dropdown_html).add_to(m#)
+    # Add the dropdown and JavaScript
+    # from branca.element import Template, MacroElement
+    # html = Template(dropdown_html)
+    # macro = MacroElement()
+    # macro._template = html
+    # m.get_root().add_child(macro)
+    # m.get_root().html.add_child(folium.Element(dropdown_html))
+
+    # m.get_root().html.add_child(folium.Element(legend_html))
     m.save("static/map.html")
 
 

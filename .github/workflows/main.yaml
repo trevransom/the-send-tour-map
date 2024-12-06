@@ -32,6 +32,7 @@ jobs:
           MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
           MICROSOFT_GRAPH_VALUE: ${{ secrets.MICROSOFT_GRAPH_VALUE }}
           TENANT_ID: ${{ secrets.TENANT_ID }}
+          JAWA_MAP_API_KEY: ${{ secrets.JAWA_MAP_API_KEY }}
         run: |
           python app.py   # Adjust this to run the map generation
 
