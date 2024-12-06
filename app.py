@@ -148,6 +148,7 @@ def create_map(tour_data):
     send_colors = cycle([red, yellow, "#1d34be"])
 
     team_colors = dict(zip(tour_data["Team"].unique(), send_colors))
+    # first_team_name =
 
     # Initialize map centered in Finland
     # Free Option (lets test with this to save quota?)
@@ -174,7 +175,9 @@ def create_map(tour_data):
         # Sort cities by date to draw lines in order of travel
         team_data = team_data.sort_values("start_date")
         route_coords = []
-        fg = folium.FeatureGroup(name=team, overlay=False)
+        fg = folium.FeatureGroup(
+            name=team, overlay=False, show=True
+            if team == team_names[0] else False)
 
         # Add markers for each stop, offsetting if necessary
         for i, (_, row) in enumerate(team_data.iterrows()):
