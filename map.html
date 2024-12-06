@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_b6ff8bb78c7c809a6c10cbd2bbe85063 {
+                #map_2f328b9da7cdf859737ae2bb24e11434 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,36 +39,14 @@
 <body>
     
     
-    <div style="
-    position: fixed; 
-    bottom: 10%; left: 5%; width: auto; max-width: 250px; height: auto; 
-    background-color: white; z-index:9999; font-size:16px;
-    border:2px solid grey; border-radius: 8px; padding: 15px;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
-    <strong>Legend</strong><br>
-    <div style="display: flex; align-items: center; margin-top: 5px;">
-        <svg width="30" height="8">
-            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3;stroke-dasharray:5,5" />
-        </svg> 
-        <span style="margin-left: 8px;">Future Route</span>
-    </div>
-    <div style="display: flex; align-items: center; margin-top: 5px;">
-        <svg width="30" height="8">
-            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3" />
-        </svg> 
-        <span style="margin-left: 8px;">Past Route</span>
-    </div>
-    </div>
-    
-    
-            <div class="folium-map" id="map_b6ff8bb78c7c809a6c10cbd2bbe85063" ></div>
+            <div class="folium-map" id="map_2f328b9da7cdf859737ae2bb24e11434" ></div>
         
 </body>
 <script>
     
     
-            var map_b6ff8bb78c7c809a6c10cbd2bbe85063 = L.map(
-                "map_b6ff8bb78c7c809a6c10cbd2bbe85063",
+            var map_2f328b9da7cdf859737ae2bb24e11434 = L.map(
+                "map_2f328b9da7cdf859737ae2bb24e11434",
                 {
                     center: [64.0, 26.0],
                     crs: L.CRS.EPSG3857,
@@ -82,150 +60,52 @@
 
         
     
-            var tile_layer_1a97e1d0a468f39947bf005edd28dc59 = L.tileLayer(
-                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 20, "maxZoom": 20, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abcd", "tms": false}
+            var tile_layer_53b3e5e04e1df33ef1f2dfbda898a12f = L.tileLayer(
+                "https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=45VPhPHg7m25rs9iR8ux0qyL6qwa9fESt2HkNpThBSu2dwDc4a6pDYyXNTCOL6sw",
+                {"attribution": "\u0026copy; Esri \u0026mdash; Source: Esri, USGS, NOAA", "detectRetina": false, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
             );
         
     
-            tile_layer_1a97e1d0a468f39947bf005edd28dc59.addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
+            tile_layer_53b3e5e04e1df33ef1f2dfbda898a12f.addTo(map_2f328b9da7cdf859737ae2bb24e11434);
         
     
-            var marker_c1dc306ba51760361b6d2032e6ed6139 = L.marker(
-                [60.2526036, 24.0684575],
+            var feature_group_17d5774a9f17f7eb2dd2d24bcb7208da = L.featureGroup(
                 {}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
-        
-    
-            var div_icon_b69d64a345c74d1b21e6bf85df71bc53 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_c1dc306ba51760361b6d2032e6ed6139.setIcon(div_icon_b69d64a345c74d1b21e6bf85df71bc53);
-        
-    
-        var popup_2aa243dd8a20a0b95cfd93bed8f50319 = L.popup({"maxWidth": 250});
-
-        
-            
-                var html_a183ec80f59981dd0b76e2c18e2b9073 = $(`<div id="html_a183ec80f59981dd0b76e2c18e2b9073" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Lohja                  <br>                 <b>Team:</b> Lilja & Elsa                  <br>                 <b>Date:</b> 2023-12-31                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
-                popup_2aa243dd8a20a0b95cfd93bed8f50319.setContent(html_a183ec80f59981dd0b76e2c18e2b9073);
-            
-        
-
-        marker_c1dc306ba51760361b6d2032e6ed6139.bindPopup(popup_2aa243dd8a20a0b95cfd93bed8f50319)
-        ;
-
-        
-    
-    
-            var poly_line_b1a2f10c6749fe178ca5daaec94eb067 = L.polyline(
-                [[60.2526036, 24.0684575], [66.5025657, 25.73122]],
-                {"bubblingMouseEvents": true, "color": "#1d34be", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#1d34be", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
-        
-    
-            poly_line_b1a2f10c6749fe178ca5daaec94eb067.bindTooltip(
-                `<div>
-                     Lilja & Elsa reitti
-                 </div>`,
-                {"sticky": true}
             );
         
     
-            var marker_9a061f328b325f0c081e884e5f59e2b1 = L.marker(
-                [66.5025657, 25.73122],
-                {}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
-        
-    
-            var div_icon_18f8b669f78e22783f3865729c5bf421 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_9a061f328b325f0c081e884e5f59e2b1.setIcon(div_icon_18f8b669f78e22783f3865729c5bf421);
-        
-    
-        var popup_290585109f25566b86eaae6151a86657 = L.popup({"maxWidth": 250});
-
-        
-            
-                var html_e871d6f365975f31b50aaf55e6136a42 = $(`<div id="html_e871d6f365975f31b50aaf55e6136a42" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Rovaniemi                  <br>                 <b>Team:</b> Lilja & Elsa                  <br>                 <b>Date:</b> 2024-11-21                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
-                popup_290585109f25566b86eaae6151a86657.setContent(html_e871d6f365975f31b50aaf55e6136a42);
-            
-        
-
-        marker_9a061f328b325f0c081e884e5f59e2b1.bindPopup(popup_290585109f25566b86eaae6151a86657)
-        ;
-
-        
-    
-    
-            var marker_9d7580d2c3818bf83f93e224e0d45587 = L.marker(
-                [62.2417066, 25.7495727],
-                {}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
-        
-    
-            var div_icon_0fcdb459ab69eae223fb70c7a9e187f0 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_9d7580d2c3818bf83f93e224e0d45587.setIcon(div_icon_0fcdb459ab69eae223fb70c7a9e187f0);
-        
-    
-        var popup_76c3a44074af53655324f00f379181c2 = L.popup({"maxWidth": 250});
-
-        
-            
-                var html_f432851e8b3101be14d13c073b4c264d = $(`<div id="html_f432851e8b3101be14d13c073b4c264d" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Jyväskylä                  <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Date:</b> 2022-11-21                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
-                popup_76c3a44074af53655324f00f379181c2.setContent(html_f432851e8b3101be14d13c073b4c264d);
-            
-        
-
-        marker_9d7580d2c3818bf83f93e224e0d45587.bindPopup(popup_76c3a44074af53655324f00f379181c2)
-        ;
-
-        
-    
-    
-            var poly_line_80cc434abb9eba5d2f247ff99ea626c3 = L.polyline(
-                [[62.2417066, 25.7495727], [60.4517531, 22.2670522]],
-                {"bubblingMouseEvents": true, "color": "#facf50", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#facf50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
-        
-    
-            poly_line_80cc434abb9eba5d2f247ff99ea626c3.bindTooltip(
-                `<div>
-                     Pellot on valmiit reitti
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_5bb44e5f17ce596db13afaef44e4d2e0 = L.marker(
+            var marker_0b41b1586dc1044d240e9df041aaa6b3 = L.marker(
                 [60.4517531, 22.2670522],
-                {}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
+                {"id": "Pellot on valmiit"}
+            ).addTo(feature_group_17d5774a9f17f7eb2dd2d24bcb7208da);
         
     
-            var div_icon_a0147bbf3561f0465ec4992417a6ab55 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_5bb44e5f17ce596db13afaef44e4d2e0.setIcon(div_icon_a0147bbf3561f0465ec4992417a6ab55);
+            var div_icon_cb97064684d481ef2b6b40444148e254 = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Pellot on valmiit\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_0b41b1586dc1044d240e9df041aaa6b3.setIcon(div_icon_cb97064684d481ef2b6b40444148e254);
         
     
-        var popup_d128cf6b3af7b2cd197871ba458e60d5 = L.popup({"maxWidth": 250});
+        var popup_95c8cde37b0a6adf9506b2f42a7c225d = L.popup({"maxWidth": 250});
 
         
             
-                var html_e9cdc281d398c86a95329c6a8c3faff7 = $(`<div id="html_e9cdc281d398c86a95329c6a8c3faff7" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Turku                  <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Date:</b> 2023-12-31                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
-                popup_d128cf6b3af7b2cd197871ba458e60d5.setContent(html_e9cdc281d398c86a95329c6a8c3faff7);
+                var html_7ae04d6f1fc98ac14248163c2b69eb2d = $(`<div id="html_7ae04d6f1fc98ac14248163c2b69eb2d" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Turku                 <br>                 <b>Place:</b> Koti                   <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Start Date:</b> 2024-12-31                 <br>                 <b>End Date:</b> 2025-01-01                 <br>             </div>`)[0];
+                popup_95c8cde37b0a6adf9506b2f42a7c225d.setContent(html_7ae04d6f1fc98ac14248163c2b69eb2d);
             
         
 
-        marker_5bb44e5f17ce596db13afaef44e4d2e0.bindPopup(popup_d128cf6b3af7b2cd197871ba458e60d5)
+        marker_0b41b1586dc1044d240e9df041aaa6b3.bindPopup(popup_95c8cde37b0a6adf9506b2f42a7c225d)
         ;
 
         
     
     
-            var poly_line_f06da59a81c41c5a294b06ad86140761 = L.polyline(
-                [[60.4517531, 22.2670522], [63.0957722, 21.6159187]],
-                {"bubblingMouseEvents": true, "color": "#facf50", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#facf50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
+            var poly_line_bd2636ead994f0630bccef4399493092 = L.polyline(
+                [[60.4517531, 22.2670522], [65.8457589, 24.1464]],
+                {"bubblingMouseEvents": true, "color": "#facf50", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#facf50", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_17d5774a9f17f7eb2dd2d24bcb7208da);
         
     
-            poly_line_f06da59a81c41c5a294b06ad86140761.bindTooltip(
+            poly_line_bd2636ead994f0630bccef4399493092.bindTooltip(
                 `<div>
                      Pellot on valmiit reitti
                  </div>`,
@@ -233,63 +113,71 @@
             );
         
     
-            var marker_f98f604488a96b4817d57099d170e4f4 = L.marker(
-                [63.0957722, 21.6159187],
-                {}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
+            var marker_7f1738ad25f9a49a04e62a71ee828342 = L.marker(
+                [65.8457589, 24.1464],
+                {"id": "Pellot on valmiit"}
+            ).addTo(feature_group_17d5774a9f17f7eb2dd2d24bcb7208da);
         
     
-            var div_icon_c5e8161d73c0a1f757850a13600df781 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_f98f604488a96b4817d57099d170e4f4.setIcon(div_icon_c5e8161d73c0a1f757850a13600df781);
+            var div_icon_5cb40d1b0d3034f3e30936e6154372e9 = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Pellot on valmiit\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_7f1738ad25f9a49a04e62a71ee828342.setIcon(div_icon_5cb40d1b0d3034f3e30936e6154372e9);
         
     
-        var popup_b386bce9902b94be6d0eb0cc6f8fedfd = L.popup({"maxWidth": 250});
+        var popup_20f44fcdb0fec2d3a09dce10c6943cdd = L.popup({"maxWidth": 250});
 
         
             
-                var html_f9063a70fa954bc324f291f2ac7cde60 = $(`<div id="html_f9063a70fa954bc324f291f2ac7cde60" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Vaasa                  <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Date:</b> 2024-11-21                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
-                popup_b386bce9902b94be6d0eb0cc6f8fedfd.setContent(html_f9063a70fa954bc324f291f2ac7cde60);
+                var html_769dc7f399fc3dc9eb6667ec2d3b4871 = $(`<div id="html_769dc7f399fc3dc9eb6667ec2d3b4871" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Kemi x Tornio                 <br>                 <b>Place:</b> Kemin helluntaiseurakunta                   <br>                 <b>Team:</b> Pellot on valmiit                  <br>                 <b>Start Date:</b> 2025-01-15                 <br>                 <b>End Date:</b> 2025-01-16                 <br>             </div>`)[0];
+                popup_20f44fcdb0fec2d3a09dce10c6943cdd.setContent(html_769dc7f399fc3dc9eb6667ec2d3b4871);
             
         
 
-        marker_f98f604488a96b4817d57099d170e4f4.bindPopup(popup_b386bce9902b94be6d0eb0cc6f8fedfd)
+        marker_7f1738ad25f9a49a04e62a71ee828342.bindPopup(popup_20f44fcdb0fec2d3a09dce10c6943cdd)
         ;
 
         
     
     
-            var marker_5e3541956b09f1f49709e6532f46f99c = L.marker(
+            feature_group_17d5774a9f17f7eb2dd2d24bcb7208da.addTo(map_2f328b9da7cdf859737ae2bb24e11434);
+        
+    
+            var feature_group_33471ccb36309bd406df0d74f6f4e661 = L.featureGroup(
+                {}
+            );
+        
+    
+            var marker_ee886e969eb38bbdc5af7394e6d4051b = L.marker(
                 [60.9826014, 25.6613764],
-                {}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
+                {"id": "Riders FC"}
+            ).addTo(feature_group_33471ccb36309bd406df0d74f6f4e661);
         
     
-            var div_icon_36c6b36a98e0441a9d4e7d75b72486ab = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_5e3541956b09f1f49709e6532f46f99c.setIcon(div_icon_36c6b36a98e0441a9d4e7d75b72486ab);
+            var div_icon_5853d1281fa5aebb5b4a3171a0d6a35f = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Riders FC\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_ee886e969eb38bbdc5af7394e6d4051b.setIcon(div_icon_5853d1281fa5aebb5b4a3171a0d6a35f);
         
     
-        var popup_4a343213e6cc2f4ac5530e6bf1cb624d = L.popup({"maxWidth": 250});
+        var popup_69a056ff1089df2bbe8d16f0240168b9 = L.popup({"maxWidth": 250});
 
         
             
-                var html_a33c4ff61f65e8b3a5694947f725d346 = $(`<div id="html_a33c4ff61f65e8b3a5694947f725d346" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Lahti                  <br>                 <b>Team:</b> Riders FC                  <br>                 <b>Date:</b> 2023-12-31                                  <br><b>Responses:</b> Huge man! big vibes!<br>                     <b>Attendance:</b> 23.0<br>                 </div>`)[0];
-                popup_4a343213e6cc2f4ac5530e6bf1cb624d.setContent(html_a33c4ff61f65e8b3a5694947f725d346);
+                var html_2e0b1098ecaedb64f040c2354ae7b7c5 = $(`<div id="html_2e0b1098ecaedb64f040c2354ae7b7c5" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Lahti                 <br>                 <b>Place:</b> Bloo                   <br>                 <b>Team:</b> Riders FC                  <br>                 <b>Start Date:</b> 2023-12-31                 <br>                 <b>End Date:</b> -                 <br>                                  <b>Attendance:</b> 23.0<br>                 </div>`)[0];
+                popup_69a056ff1089df2bbe8d16f0240168b9.setContent(html_2e0b1098ecaedb64f040c2354ae7b7c5);
             
         
 
-        marker_5e3541956b09f1f49709e6532f46f99c.bindPopup(popup_4a343213e6cc2f4ac5530e6bf1cb624d)
+        marker_ee886e969eb38bbdc5af7394e6d4051b.bindPopup(popup_69a056ff1089df2bbe8d16f0240168b9)
         ;
 
         
     
     
-            var poly_line_bc572362b3fc6c02045c265fa9a07730 = L.polyline(
-                [[60.9826014, 25.6613764], [60.1674881, 24.9427473]],
-                {"bubblingMouseEvents": true, "color": "#fa0015", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#fa0015", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
+            var poly_line_06db416a7191e2a3c24caeed56f68162 = L.polyline(
+                [[60.9826014, 25.6613764], [62.2417066, 25.7495727]],
+                {"bubblingMouseEvents": true, "color": "#fa0015", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#fa0015", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_33471ccb36309bd406df0d74f6f4e661);
         
     
-            poly_line_bc572362b3fc6c02045c265fa9a07730.bindTooltip(
+            poly_line_06db416a7191e2a3c24caeed56f68162.bindTooltip(
                 `<div>
                      Riders FC reitti
                  </div>`,
@@ -297,29 +185,87 @@
             );
         
     
-            var marker_42f7212e038969e1974f216f15f6a88b = L.marker(
-                [60.1674881, 24.9427473],
-                {}
-            ).addTo(map_b6ff8bb78c7c809a6c10cbd2bbe85063);
+            var marker_0f78031f224fc594aa4cd666c6d07976 = L.marker(
+                [62.2417066, 25.7495727],
+                {"id": "Riders FC"}
+            ).addTo(feature_group_33471ccb36309bd406df0d74f6f4e661);
         
     
-            var div_icon_b34d2be3afb6cba0a57488fbff30e042 = L.divIcon({"className": "empty", "html": "\u003cdiv style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_42f7212e038969e1974f216f15f6a88b.setIcon(div_icon_b34d2be3afb6cba0a57488fbff30e042);
+            var div_icon_36f787077e1d6107090f4a3acaacd557 = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Riders FC\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_0f78031f224fc594aa4cd666c6d07976.setIcon(div_icon_36f787077e1d6107090f4a3acaacd557);
         
     
-        var popup_961779cef8ac073d2129920634fd5b21 = L.popup({"maxWidth": 250});
+        var popup_00bfa56d332181fc4bb297aafc6e93f6 = L.popup({"maxWidth": 250});
 
         
             
-                var html_c2ca4b1c474366a5113b9dddbe7394da = $(`<div id="html_c2ca4b1c474366a5113b9dddbe7394da" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Helsinki                  <br>                 <b>Team:</b> Riders FC                  <br>                 <b>Date:</b> 2024-03-01                                  <br><b>Responses:</b> nan<br>                     <b>Attendance:</b> nan<br>                 </div>`)[0];
-                popup_961779cef8ac073d2129920634fd5b21.setContent(html_c2ca4b1c474366a5113b9dddbe7394da);
+                var html_48c4b6a0459e11556401319556caa8db = $(`<div id="html_48c4b6a0459e11556401319556caa8db" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Jyväskylä                 <br>                 <b>Place:</b> Yhteiskristillinen One Heart - Send Experience                   <br>                 <b>Team:</b> Riders FC                  <br>                 <b>Start Date:</b> 2025-01-10                 <br>                 <b>End Date:</b> 2025-01-11                 <br>             </div>`)[0];
+                popup_00bfa56d332181fc4bb297aafc6e93f6.setContent(html_48c4b6a0459e11556401319556caa8db);
             
         
 
-        marker_42f7212e038969e1974f216f15f6a88b.bindPopup(popup_961779cef8ac073d2129920634fd5b21)
+        marker_0f78031f224fc594aa4cd666c6d07976.bindPopup(popup_00bfa56d332181fc4bb297aafc6e93f6)
         ;
 
         
     
+    
+            var poly_line_a08ebc7c70967f66a61a059ba5152359 = L.polyline(
+                [[62.2417066, 25.7495727], [61.3441735, 22.9094429]],
+                {"bubblingMouseEvents": true, "color": "#fa0015", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#fa0015", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(feature_group_33471ccb36309bd406df0d74f6f4e661);
+        
+    
+            poly_line_a08ebc7c70967f66a61a059ba5152359.bindTooltip(
+                `<div>
+                     Riders FC reitti
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var marker_dc326ee1a54d5ca436f89845166c12b6 = L.marker(
+                [61.3441735, 22.9094429],
+                {"id": "Riders FC"}
+            ).addTo(feature_group_33471ccb36309bd406df0d74f6f4e661);
+        
+    
+            var div_icon_1912e562ad547ef6e7af62b9fa4f9c53 = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Riders FC\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_dc326ee1a54d5ca436f89845166c12b6.setIcon(div_icon_1912e562ad547ef6e7af62b9fa4f9c53);
+        
+    
+        var popup_64b59a10793add681474189be836ffb4 = L.popup({"maxWidth": 250});
+
+        
+            
+                var html_944e170d306b383f2a8b80e12c4d2876 = $(`<div id="html_944e170d306b383f2a8b80e12c4d2876" style="width: 100.0%; height: 100.0%;">                 <b>City:</b> Vammala                 <br>                 <b>Place:</b> Vammalan helluntaiseurakunta                   <br>                 <b>Team:</b> Riders FC                  <br>                 <b>Start Date:</b> 2025-01-24                 <br>                 <b>End Date:</b> 2025-01-25                 <br>             </div>`)[0];
+                popup_64b59a10793add681474189be836ffb4.setContent(html_944e170d306b383f2a8b80e12c4d2876);
+            
+        
+
+        marker_dc326ee1a54d5ca436f89845166c12b6.bindPopup(popup_64b59a10793add681474189be836ffb4)
+        ;
+
+        
+    
+    
+            feature_group_33471ccb36309bd406df0d74f6f4e661.addTo(map_2f328b9da7cdf859737ae2bb24e11434);
+        
+    
+            var layer_control_40c283e299b5f9f5bf152d0849b32256_layers = {
+                base_layers : {
+                    "Pellot on valmiit" : feature_group_17d5774a9f17f7eb2dd2d24bcb7208da,
+                    "Riders FC" : feature_group_33471ccb36309bd406df0d74f6f4e661,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_40c283e299b5f9f5bf152d0849b32256 = L.control.layers(
+                layer_control_40c283e299b5f9f5bf152d0849b32256_layers.base_layers,
+                layer_control_40c283e299b5f9f5bf152d0849b32256_layers.overlays,
+                {"autoZIndex": true, "collapsed": false, "position": "bottomleft"}
+            ).addTo(map_2f328b9da7cdf859737ae2bb24e11434);
+
+        
 </script>
 </html>
