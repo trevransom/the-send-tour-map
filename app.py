@@ -157,7 +157,7 @@ def create_map(tour_data):
 
     # Quota Options
     folium.TileLayer(
-        tiles="https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={JAWA_MAP_API_KEY}".format(
+        tiles="https://{{s}}.tile.jawg.io/jawg-dark/{{z}}/{{x}}/{{y}}{{r}}.png?access-token={JAWA_MAP_API_KEY}".format(
             JAWA_MAP_API_KEY=JAWA_MAP_API_KEY),
         attr="&copy; Esri &mdash; Source: Esri, USGS, NOAA",
         control=False).add_to(m)
