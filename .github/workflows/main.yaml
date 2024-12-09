@@ -36,6 +36,16 @@ jobs:
         run: |
           python app.py   # Adjust this to run the map generation
 
+      - name: Commit and Push Map
+        run: |
+          git config --local user.name "GitHub Actions Bot"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add static/map.html
+          git commit -m "Update map.html"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         if: github.ref == 'refs/heads/main'
