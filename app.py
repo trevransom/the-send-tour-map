@@ -176,7 +176,7 @@ def create_map(tour_data):
         team_data = team_data.sort_values("start_date")
         route_coords = []
         fg = folium.FeatureGroup(
-            name=team, overlay=False, show=True
+            name=team, overlay=True, show=True
             if team == team_names[0] else False)
 
         # Add markers for each stop, offsetting if necessary
