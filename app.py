@@ -1,4 +1,5 @@
 import pytz
+from datetime import datetime, timedelta
 import folium
 import random
 from geopy.geocoders import Nominatim
@@ -126,13 +127,14 @@ def create_map(tour_data):
     geolocator = Nominatim(user_agent="tour_mapper")
 
     # Get coordinates for each city and add to the DataFrame
-    tour_data["Coordinates"] = tour_data["City"].apply(lambda city: geolocator.geocode(city))
+    #
+    #print(city)
+    tour_data["Coordinates"] = tour_data["City"].apply(lambda city: geolocator.geocode(city, timeout=10))
     tour_data["Latitude"] = tour_data["Coordinates"].apply(
         lambda loc: loc.latitude if loc else None)
     tour_data["Longitude"] = tour_data["Coordinates"].apply(
         lambda loc: loc.longitude if loc else None)
     tour_data.drop(columns="Coordinates", inplace=True)
-    from datetime import datetime, timedelta
     # tour_data
     # tour_data['Date'] = pd.to_datetime(tour_data['Date'], errors="coerce")
     print(tour_data)
@@ -168,6 +170,10 @@ def create_map(tour_data):
     # Filter for cities visited by more than one team
     multiple_team_cities = city_visit_counts[city_visit_counts['team_count'] > 1]
     multiple_visit_list = multiple_team_cities["City"].tolist()
+    # Feature Groups
+    past_events = folium.FeatureGroup(name="Past Events", overlay=True)
+    upcoming_events = folium.FeatureGroup(name="Upcoming Events", overlay=True)
+
 
     OFFSET = 0.03
     # Group by team and plot routes
@@ -175,9 +181,12 @@ def create_map(tour_data):
         # Sort cities by date to draw lines in order of travel
         team_data = team_data.sort_values("start_date")
         route_coords = []
-        fg = folium.FeatureGroup(
-            name=team, overlay=True, show=True
-            if team == team_names[0] else False)
+        #fg = folium.FeatureGroup(
+        #    name=team, overlay=True, show=True
+        #    if team == team_names[0] else False)
+
+        fg = folium.FeatureGroup(name=team, overlay=True, show=True)
+
 
         # Add markers for each stop, offsetting if necessary
         for i, (_, row) in enumerate(team_data.iterrows()):
@@ -195,51 +204,42 @@ def create_map(tour_data):
                 route_coords_sub = [route_coords[i-1], route_coords[i]]
                 line_style = '5, 5' if IN_FUTURE else None
                 print(line_style)
-                # folium.PolyLine(segment_coords, color=color, weight=5, opacity=0.8).add_to(m)
-                folium.PolyLine(
+                route = folium.PolyLine(
                     route_coords_sub,
                     color=team_colors[team],
                     dash_array=line_style,
-                    weight=3,
+                    weight=1,
                     opacity=1,
                     tooltip=f"{team} reitti"
                 ).add_to(fg)
+
                 print(f"team-{team.replace(' ', '-')}")
 
             # need to join the dates here if here
             dates = f"{row['start_date'].strftime('%Y-%m-%d')}{' - '+row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else ''}"
             marker_text = f"""
-                <b>City:</b> {row['City']}
+                <b>Kaupunki:</b> {row['City']}
                 <br>
-                <b>Place:</b> {row['Church']}
-
-
+                <b>Paikka:</b> {row['Church']}
                 <br>
-                <b>Team:</b> {row['Team']}
-
+                <b>Tiimi:</b> {row['Team']}
                 <br>
-                <b>Start Date:</b> {row['start_date'].strftime('%Y-%m-%d') if pd.notnull(row['start_date']) else "-"}
+                <b>Aloituspäivä:</b> {row['start_date'].strftime('%Y-%m-%d') if pd.notnull(row['start_date']) else "-"}
                 <br>
-                <b>End Date:</b> {row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else "-"}
+                <b>Päättymispäivä:</b> {row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else "-"}
                 <br>
             """
 
             if not IN_FUTURE:
                 marker_text += f"""
-                    <b>Attendance:</b> {row['Attendance']}<br>
+                    <b>Osallistujien määrä:</b> {row['Attendance']}<br>
                 """
 
             # Place a fire emoji marker for each stop
-            folium.Marker(
+            mark=folium.Marker(
                 location=[offset_lat, offset_lon],
                 popup=folium.Popup(marker_text, max_width=250),
-                # tooltip=folium.Tooltip(marker_text, ),
-                # icon=folium.Icon(color="orange", icon="fire", prefix='fa')
-                # icon=folium.DivIcon(
-                #    icon_size=(20, 20),
-                #    html='<div style="font-size: 20px;">🔥</div>'
-                # )
-                id=team,  # Unique identifier
+                id=team, 
                 icon=folium.DivIcon(
                     html=(
                         f'<div id="{team}" style="font-size:24px; color:red; text-align:center; '
@@ -247,77 +247,40 @@ def create_map(tour_data):
                     )
                 )
             ).add_to(fg)
+            
         fg.add_to(m)
+        # Add Groups to Map
 
     # Save the map to the static folder
     # Add a legend to the map
     legend_html = '''
     <div style="
-    position: fixed; 
-    bottom: 10%; left: 5%; width: auto; max-width: 250px; height: auto; 
-    background-color: white; z-index:9999; font-size:16px;
-    border:2px solid grey; border-radius: 8px; padding: 15px;
+    position: absolute; 
+    bottom: 100px; left: 10px; width: auto; max-width: 200px; height: auto; 
+    background-color: white; z-index:9999; font-size:12px;
+    border:2px solid grey; border-radius: 8px; padding: 10px;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
-    <strong>Legend</strong><br>
+    <strong>Legenda</strong><br>
     <div style="display: flex; align-items: center; margin-top: 5px;">
         <svg width="30" height="8">
-            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3;stroke-dasharray:5,5" />
+            <line x1="0" y1="4" x2="30" y2="4" style="stroke:#0275ff;stroke-width:3;stroke-dasharray:5,5" />
         </svg> 
-        <span style="margin-left: 8px;">Future Route</span>
+        <span style="margin-left: 8px;">Tulossa</span>
     </div>
     <div style="display: flex; align-items: center; margin-top: 5px;">
         <svg width="30" height="8">
-            <line x1="0" y1="4" x2="30" y2="4" style="stroke:blue;stroke-width:3" />
+            <line x1="0" y1="4" x2="30" y2="4" style="stroke:#0275ff;stroke-width:3" />
         </svg> 
-        <span style="margin-left: 8px;">Past Route</span>
+        <span style="margin-left: 8px;">Edellinen</span>
     </div>
     </div>
+    
     '''
     # Add LayerControl for toggling
     folium.LayerControl(position="bottomleft", collapsed=False).add_to(m)
 
-    # Add a dropdown menu for teams using HTML and JavaScript
-    dropdown_html = """
-    <div style="position: fixed; top: 10px; left: 10px; z-index: 1000; background-color: white; padding: 10px;">
-    <label for="team-dropdown">Select Team:</label>
-    <select id="team-dropdown" onchange="filterTeam()">
-        <option value="all">All Teams</option>
-        {}
-    </select>
-    </div>
-    <script>
-    function filterTeam() {{
-        var selectedTeam = document.getElementById('team-dropdown').value;
-
-        // Iterate through layers and toggle visibility
-        map.eachLayer(function (layer) {{
-        if (layer.options && layer.options.name) {{
-            if (selectedTeam === "all" || layer.options.name === selectedTeam) {{
-            map.addLayer(layer);
-            }} else {{
-            map.removeLayer(layer);
-            }}
-        }}
-        }});
-    }}
-    console.log(selectedTeam)
-    </script>
-    """.format(
-        "\n".join(f"<option value='{team}'>{team}</option>" for team in team_names)
-    )
-    print(team_names)
-
-    # Add the dropdown menu to the map
-    # folium.Element(dropdown_html).add_to(m#)
-    # Add the dropdown and JavaScript
-    # from branca.element import Template, MacroElement
-    # html = Template(dropdown_html)
-    # macro = MacroElement()
-    # macro._template = html
-    # m.get_root().add_child(macro)
-    # m.get_root().html.add_child(folium.Element(dropdown_html))
-
-    # m.get_root().html.add_child(folium.Element(legend_html))
+    
+    m.get_root().html.add_child(folium.Element(legend_html))
     m.save("static/map.html")
 
 
