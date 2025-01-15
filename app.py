@@ -239,7 +239,7 @@ def create_map(tour_data):
                     <br>
                 """
 
-            if not IN_FUTURE:
+            if pd.notnull(row['Attendance']) and not IN_FUTURE:
                 marker_text += f"""
                     <b>Osallistujien määrä:</b> {row['Attendance']}<br>
                 """

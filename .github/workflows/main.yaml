@@ -10,6 +10,9 @@ on:
   workflow_dispatch: # Allows manual triggering
   schedule:
     - cron: "0 9 * * *" # Runs daily at 9:00 a.m. UTC
+  push:
+    branches:
+      - main # or the branch you want to trigger the action on
 
 jobs:
   build:
