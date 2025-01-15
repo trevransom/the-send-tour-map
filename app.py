@@ -100,10 +100,6 @@ def process_data(data, plan_data):
         records.append(record)
 
     # Create a DataFrame and convert it to JSON
-    typeform_df = pd.DataFrame(records)
-    typeform_df['start_date'] = pd.to_datetime(typeform_df['StartDate'], format='mixed', utc=True)
-    typeform_df['end_date'] = pd.to_datetime(typeform_df['EndDate'], format='mixed', utc=True)
-
     # Split the date ranges into start and end dates
     plan_data[['start_date', 'end_date']] = plan_data['Date'].str.split('-', expand=True)
     print(plan_data)
@@ -112,11 +108,20 @@ def process_data(data, plan_data):
         plan_data['start_date'],
         format='%d.%m.%Y', errors='coerce', utc=True)
 
-    df = pd.concat([typeform_df, plan_data]).drop_duplicates(
-        subset=['start_date', 'Team'],
-        keep='first',
-        ignore_index=True
-    )
+    if len(records) > 0:
+        typeform_df = pd.DataFrame(records)
+
+        typeform_df['start_date'] = pd.to_datetime(
+            typeform_df['StartDate'], format='mixed', utc=True)
+        typeform_df['end_date'] = pd.to_datetime(typeform_df['EndDate'], format='mixed', utc=True)
+
+        df = pd.concat([typeform_df, plan_data]).drop_duplicates(
+            subset=['start_date', 'Team'],
+            keep='first',
+            ignore_index=True
+        )
+    else:
+        df = plan_data
     df['end_date'] = pd.to_datetime(df['end_date'], format='%d.%m.%Y', errors='coerce', utc=True)
     # i need logic to sort by the first date if there's a span
     print(df)
