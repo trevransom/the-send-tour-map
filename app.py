@@ -160,6 +160,7 @@ def create_map(tour_data):
 
     # Initialize map centered in Finland
     # Free Option (lets test with this to save quota?)
+    # what's our free option?
     # or do we wanna test quota?
     # yeah lets test... stress test...
     m = folium.Map(location=[64.0, 26.0], tiles=None, zoom_start=6)
@@ -171,14 +172,24 @@ def create_map(tour_data):
         attr="&copy; Esri &mdash; Source: Esri, USGS, NOAA",
         control=False).add_to(m)
 
-    city_visit_counts = tour_data.groupby('City')['Team'].nunique().reset_index(name='team_count')
+    # city_visit_counts = tour_data.groupby('City')['Team'].nunique().reset_index(name='team_count')
+    city_visit_counts = tour_data.groupby('City').size().reset_index(name="team_count")
+    # team_counts = df.groupby("City").size().reset_index(name="TeamOccurrences")
+    # print()
+    # ah i see this is only account for other teams not within its own team
+    # it should both account for its own team AND other teams - so like the whole list basically
+    print(city_visit_counts)
 
     # Filter for cities visited by more than one team
-    multiple_team_cities = city_visit_counts[city_visit_counts['team_count'] > 1]
-    multiple_visit_list = multiple_team_cities["City"].tolist()
+    # multiple_team_cities = city_visit_counts[city_visit_counts['team_count'] > 1]
+    # multiple_visit_list = multiple_team_cities["City"].tolist()
+    multiple_visit_list = city_visit_counts[city_visit_counts["team_count"] > 1]["City"].tolist(
+    )
+    print(multiple_visit_list)
+
     # Feature Groups
-    past_events = folium.FeatureGroup(name="Past Events", overlay=True)
-    upcoming_events = folium.FeatureGroup(name="Upcoming Events", overlay=True)
+#    past_events = folium.FeatureGroup(name="Past Events", overlay=True)
+#    upcoming_events = folium.FeatureGroup(name="Upcoming Events", overlay=True)
 
     OFFSET = 0.03
     # Group by team and plot routes
@@ -200,14 +211,14 @@ def create_map(tour_data):
             if row["City"] in multiple_visit_list:
                 frand = random.uniform(0, OFFSET)
 
-            print(team, i, row["City"], frand * team_index)
+            print(team, i, row["City"], row["start_date"], frand * team_index)
             offset_lat = row["Latitude"]
             offset_lon = row["Longitude"] - frand * team_index
             route_coords.append([offset_lat, offset_lon])
             if i > 0:
                 route_coords_sub = [route_coords[i-1], route_coords[i]]
                 line_style = '5, 5' if IN_FUTURE else None
-                print(line_style)
+                # print(line_style)
                 route = folium.PolyLine(
                     route_coords_sub,
                     color=team_colors[team],
