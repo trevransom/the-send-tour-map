@@ -128,8 +128,9 @@ def create_map(tour_data):
 
     # Get coordinates for each city and add to the DataFrame
     #
-    #print(city)
-    tour_data["Coordinates"] = tour_data["City"].apply(lambda city: geolocator.geocode(city, timeout=10))
+    # print(city)
+    tour_data["Coordinates"] = tour_data["City"].apply(
+        lambda city: geolocator.geocode(city, timeout=10))
     tour_data["Latitude"] = tour_data["Coordinates"].apply(
         lambda loc: loc.latitude if loc else None)
     tour_data["Longitude"] = tour_data["Coordinates"].apply(
@@ -138,7 +139,7 @@ def create_map(tour_data):
     # tour_data
     # tour_data['Date'] = pd.to_datetime(tour_data['Date'], errors="coerce")
     print(tour_data)
-    tour_data = tour_data[tour_data['start_date'] <= datetime.now(pytz.UTC) + timedelta(days=50)]
+    tour_data = tour_data[tour_data['start_date'] <= datetime.now(pytz.UTC) + timedelta(days=30)]
     print(tour_data)
 
     # Define color palette for each team
@@ -174,19 +175,17 @@ def create_map(tour_data):
     past_events = folium.FeatureGroup(name="Past Events", overlay=True)
     upcoming_events = folium.FeatureGroup(name="Upcoming Events", overlay=True)
 
-
     OFFSET = 0.03
     # Group by team and plot routes
     for team_index, (team, team_data) in enumerate(tour_data.groupby("Team")):
         # Sort cities by date to draw lines in order of travel
         team_data = team_data.sort_values("start_date")
         route_coords = []
-        #fg = folium.FeatureGroup(
+        # fg = folium.FeatureGroup(
         #    name=team, overlay=True, show=True
         #    if team == team_names[0] else False)
 
         fg = folium.FeatureGroup(name=team, overlay=True, show=True)
-
 
         # Add markers for each stop, offsetting if necessary
         for i, (_, row) in enumerate(team_data.iterrows()):
@@ -216,7 +215,8 @@ def create_map(tour_data):
                 print(f"team-{team.replace(' ', '-')}")
 
             # need to join the dates here if here
-            dates = f"{row['start_date'].strftime('%Y-%m-%d')}{' - '+row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else ''}"
+            dates = f"""{row['start_date'].strftime(
+                '%Y-%m-%d')}{' - '+row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else ''}"""
             marker_text = f"""
                 <b>Kaupunki:</b> {row['City']}
                 <br>
@@ -224,11 +224,20 @@ def create_map(tour_data):
                 <br>
                 <b>Tiimi:</b> {row['Team']}
                 <br>
-                <b>Aloituspäivä:</b> {row['start_date'].strftime('%Y-%m-%d') if pd.notnull(row['start_date']) else "-"}
-                <br>
-                <b>Päättymispäivä:</b> {row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else "-"}
-                <br>
             """
+
+            if pd.notnull(row['end_date']):
+                marker_text += f"""
+                    <b>Aloituspäivä:</b> {row['start_date'].strftime('%Y-%m-%d') if pd.notnull(row['start_date']) else "-"}
+                    <br>
+                    <b>Päättymispäivä:</b> {row['end_date'].strftime('%Y-%m-%d') if pd.notnull(row['end_date']) else "-"}
+                    <br>
+                """
+            else:
+                marker_text += f"""
+                    <b>Päivä:</b> {row['start_date'].strftime('%Y-%m-%d') if pd.notnull(row['start_date']) else "-"}
+                    <br>
+                """
 
             if not IN_FUTURE:
                 marker_text += f"""
@@ -236,10 +245,10 @@ def create_map(tour_data):
                 """
 
             # Place a fire emoji marker for each stop
-            mark=folium.Marker(
+            mark = folium.Marker(
                 location=[offset_lat, offset_lon],
                 popup=folium.Popup(marker_text, max_width=250),
-                id=team, 
+                id=team,
                 icon=folium.DivIcon(
                     html=(
                         f'<div id="{team}" style="font-size:24px; color:red; text-align:center; '
@@ -247,7 +256,7 @@ def create_map(tour_data):
                     )
                 )
             ).add_to(fg)
-            
+
         fg.add_to(m)
         # Add Groups to Map
 
@@ -279,7 +288,6 @@ def create_map(tour_data):
     # Add LayerControl for toggling
     folium.LayerControl(position="bottomleft", collapsed=False).add_to(m)
 
-    
     m.get_root().html.add_child(folium.Element(legend_html))
     m.save("static/map.html")
 
