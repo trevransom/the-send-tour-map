@@ -163,7 +163,7 @@ def create_map(tour_data):
     # what's our free option?
     # or do we wanna test quota?
     # yeah lets test... stress test...
-    m = folium.Map(location=[64.0, 26.0], tiles=None, zoom_start=6)
+    m = folium.Map(location=[64.0, 26.0], tiles=None, zoom_start=5)
 
     # Quota Options
     folium.TileLayer(
