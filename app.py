@@ -211,9 +211,10 @@ def create_map(tour_data):
             if row["City"] in multiple_visit_list:
                 frand = random.uniform(0, OFFSET)
 
-            print(team, i, row["City"], row["start_date"], frand * team_index)
+            print(team, i, row["City"], row["start_date"], frand, frand * (team_index + 1))
             offset_lat = row["Latitude"]
-            offset_lon = row["Longitude"] - frand * team_index
+            # doesn't work if team index is 0
+            offset_lon = row["Longitude"] - frand * (team_index + 1)
             route_coords.append([offset_lat, offset_lon])
             if i > 0:
                 route_coords_sub = [route_coords[i-1], route_coords[i]]
