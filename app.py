@@ -92,12 +92,13 @@ def process_data(data, plan_data):
             "City": fields.get("city"),
             "Team": fields.get("tour_team"),
             "Recap": fields.get("recap"),
-            "Attendance": fields.get("attendance"),
+            "Attendance": fields.get("attendance"),  # this should be an int
             "StartDate": fields.get("event_date"),
             "EndDate": fields.get("event_end_date"),
             "Church": fields.get("church"),
         }
         records.append(record)
+    # sys
 
     # Create a DataFrame and convert it to JSON
     # Split the date ranges into start and end dates
@@ -124,7 +125,6 @@ def process_data(data, plan_data):
         df = plan_data
     df['end_date'] = pd.to_datetime(df['end_date'], format='%d.%m.%Y', errors='coerce', utc=True)
     # i need logic to sort by the first date if there's a span
-    print(df)
     return df
 
 
@@ -257,7 +257,7 @@ def create_map(tour_data):
 
             if pd.notnull(row.get('Attendance')) and not IN_FUTURE:
                 marker_text += f"""
-                    <b>Osallistujien määrä:</b> {row['Attendance']}<br>
+                    <b>Osallistujien määrä:</b> {int(row['Attendance'])}<br>
                 """
 
             # Place a fire emoji marker for each stop
