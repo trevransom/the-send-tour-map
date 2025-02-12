@@ -93,6 +93,7 @@ def process_data(data, plan_data):
             "Team": fields.get("tour_team"),
             "Recap": fields.get("recap"),
             "Attendance": fields.get("attendance"),  # this should be an int
+            "Salvations": fields.get("salvations"),  # this should be an int
             "StartDate": fields.get("event_date"),
             "EndDate": fields.get("event_end_date"),
             "Church": fields.get("church"),
@@ -121,6 +122,7 @@ def process_data(data, plan_data):
             keep='first',
             ignore_index=True
         )
+        df['Salvations'] = df['Salvations'].fillna(0).astype(int)
     else:
         df = plan_data
     df['end_date'] = pd.to_datetime(df['end_date'], format='%d.%m.%Y', errors='coerce', utc=True)
@@ -148,12 +150,15 @@ def create_map(tour_data):
     print(tour_data)
 
     # Define color palette for each team
-    colors = cycle(["blue", "green", "red", "purple", "orange", "darkred", "darkblue"])
     red = "#fa0015"
     yellow = "#facf50"
+    white = "#ffffff"
+    blue = "#1d34be"
+    violet = "#523d90"
+    orange = "#f3724a"
     team_names = tour_data["Team"].unique().tolist()
     # ooo could we do gradients for these routes instead?
-    send_colors = cycle([red, yellow, "#1d34be"])
+    send_colors = cycle([red, yellow, blue, white, violet, orange])
 
     team_colors = dict(zip(tour_data["Team"].unique(), send_colors))
     # first_team_name =
@@ -259,6 +264,12 @@ def create_map(tour_data):
             if pd.notnull(row.get('Attendance')) and not IN_FUTURE:
                 marker_text += f"""
                     <b>Osallistujien määrä:</b> {int(row['Attendance'])}<br>
+                """
+
+            if int(row.get("Salvations")) > 0 and not IN_FUTURE:
+                print(row['Salvations'])
+                marker_text += f"""
+                    <b>Uskoontulleiden määrä:</b> {int(row['Salvations'])}<br>
                 """
 
             # Place a fire emoji marker for each stop
