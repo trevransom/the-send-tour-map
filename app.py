@@ -293,7 +293,7 @@ def create_map(tour_data):
     legend_html = '''
     <div style="
     position: absolute; 
-    bottom: 130px; left: 10px; width: auto; max-width: 200px; height: auto; 
+    bottom: 145px; left: 10px; width: auto; max-width: 200px; height: auto; 
     background-color: white; z-index:9999; font-size:12px;
     border:2px solid grey; border-radius: 8px; padding: 10px;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
