@@ -147,6 +147,7 @@ def create_map(tour_data):
     # tour_data['Date'] = pd.to_datetime(tour_data['Date'], errors="coerce")
     print(tour_data)
     tour_data = tour_data[tour_data['start_date'] <= datetime.now(pytz.UTC) + timedelta(days=30)]
+    tour_data = tour_data[tour_data['start_date'] >= datetime.now(pytz.UTC)]
     print(tour_data)
 
     # Define color palette for each team
@@ -290,33 +291,12 @@ def create_map(tour_data):
 
     # Save the map to the static folder
     # Add a legend to the map
-    legend_html = '''
-    <div style="
-    position: absolute; 
-    bottom: 145px; left: 10px; width: auto; max-width: 200px; height: auto; 
-    background-color: white; z-index:9999; font-size:12px;
-    border:2px solid grey; border-radius: 8px; padding: 10px;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.3);">
-    <strong>Legenda</strong><br>
-    <div style="display: flex; align-items: center; margin-top: 5px;">
-        <svg width="30" height="8">
-            <line x1="0" y1="4" x2="30" y2="4" style="stroke:#0275ff;stroke-width:3;stroke-dasharray:5,5" />
-        </svg> 
-        <span style="margin-left: 8px;">Tulossa</span>
-    </div>
-    <div style="display: flex; align-items: center; margin-top: 5px;">
-        <svg width="30" height="8">
-            <line x1="0" y1="4" x2="30" y2="4" style="stroke:#0275ff;stroke-width:3" />
-        </svg> 
-        <span style="margin-left: 8px;">Edellinen</span>
-    </div>
-    </div>
-    
-    '''
+    #legend_html = '''
+   
     # Add LayerControl for toggling
     folium.LayerControl(position="bottomleft", collapsed=False).add_to(m)
 
-    m.get_root().html.add_child(folium.Element(legend_html))
+    #m.get_root().html.add_child(folium.Element(legend_html))
     m.save("static/map.html")
 
 
