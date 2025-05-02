@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_c55f07372709a34908e37f6702cf6ae1 {
+                #map_58d9f7744fa711b193b9c0e5d1186d31 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,14 +39,14 @@
 <body>
     
     
-            <div class="folium-map" id="map_c55f07372709a34908e37f6702cf6ae1" ></div>
+            <div class="folium-map" id="map_58d9f7744fa711b193b9c0e5d1186d31" ></div>
         
 </body>
 <script>
     
     
-            var map_c55f07372709a34908e37f6702cf6ae1 = L.map(
-                "map_c55f07372709a34908e37f6702cf6ae1",
+            var map_58d9f7744fa711b193b9c0e5d1186d31 = L.map(
+                "map_58d9f7744fa711b193b9c0e5d1186d31",
                 {
                     center: [64.0, 26.0],
                     crs: L.CRS.EPSG3857,
@@ -60,99 +60,60 @@
 
         
     
-            var tile_layer_9f113f984f7976491fbc7f7e4130e9de = L.tileLayer(
+            var tile_layer_54d751785baf5a0b36a7590d040d6a3d = L.tileLayer(
                 "https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token=45VPhPHg7m25rs9iR8ux0qyL6qwa9fESt2HkNpThBSu2dwDc4a6pDYyXNTCOL6sw",
                 {"attribution": "\u0026copy; Esri \u0026mdash; Source: Esri, USGS, NOAA", "detectRetina": false, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
             );
         
     
-            tile_layer_9f113f984f7976491fbc7f7e4130e9de.addTo(map_c55f07372709a34908e37f6702cf6ae1);
+            tile_layer_54d751785baf5a0b36a7590d040d6a3d.addTo(map_58d9f7744fa711b193b9c0e5d1186d31);
         
     
-            var feature_group_2b6ea4c7a28988bb93e306ad6dc51349 = L.featureGroup(
+            var feature_group_61de84bc64c594e7bda1a43afa9ad886 = L.featureGroup(
                 {}
             );
         
     
-            var marker_b834906cea0b2527ef5787da94f13cf9 = L.marker(
-                [61.1770887, 22.6990511],
-                {"id": "Pellot on valmiit"}
-            ).addTo(feature_group_2b6ea4c7a28988bb93e306ad6dc51349);
-        
-    
-            var div_icon_060ce28afe427d5262187723113819e7 = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Pellot on valmiit\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_b834906cea0b2527ef5787da94f13cf9.setIcon(div_icon_060ce28afe427d5262187723113819e7);
-        
-    
-        var popup_f1c6f49043a666b1f06a770d88c187d2 = L.popup({"maxWidth": 250});
-
-        
-            
-                var html_1f24c12c0ffd90bf070bba226d51b36d = $(`<div id="html_1f24c12c0ffd90bf070bba226d51b36d" style="width: 100.0%; height: 100.0%;">                 <b>Kaupunki:</b> Huittinen                 <br>                 <b>Paikka:</b> Huittisen seurakunta                 <br>                 <b>Tiimi:</b> Pellot on valmiit                 <br>                                  <b>Päivä:</b> 2025-05-02                     <br>                 </div>`)[0];
-                popup_f1c6f49043a666b1f06a770d88c187d2.setContent(html_1f24c12c0ffd90bf070bba226d51b36d);
-            
-        
-
-        marker_b834906cea0b2527ef5787da94f13cf9.bindPopup(popup_f1c6f49043a666b1f06a770d88c187d2)
-        ;
-
-        
-    
-    
-            var poly_line_e9159f5647b9be1af6ea73ea8a8bb0f5 = L.polyline(
-                [[61.1770887, 22.6990511], [61.4866126, 21.7972071]],
-                {"bubblingMouseEvents": true, "color": "#fa0015", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#fa0015", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1, "smoothFactor": 1.0, "stroke": true, "weight": 1}
-            ).addTo(feature_group_2b6ea4c7a28988bb93e306ad6dc51349);
-        
-    
-            poly_line_e9159f5647b9be1af6ea73ea8a8bb0f5.bindTooltip(
-                `<div>
-                     Pellot on valmiit reitti
-                 </div>`,
-                {"sticky": true}
-            );
-        
-    
-            var marker_89c0f8cfabbef22d96b39e5b4650a7ad = L.marker(
+            var marker_2d2b1a1f270d797a07ca2d45799dd7b8 = L.marker(
                 [61.4866126, 21.7972071],
                 {"id": "Pellot on valmiit"}
-            ).addTo(feature_group_2b6ea4c7a28988bb93e306ad6dc51349);
+            ).addTo(feature_group_61de84bc64c594e7bda1a43afa9ad886);
         
     
-            var div_icon_b079b4adf7e88142e8f1f96e9d88066b = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Pellot on valmiit\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
-            marker_89c0f8cfabbef22d96b39e5b4650a7ad.setIcon(div_icon_b079b4adf7e88142e8f1f96e9d88066b);
+            var div_icon_77110deec41eaba05e5319a4ee7c85a0 = L.divIcon({"className": "empty", "html": "\u003cdiv id=\"Pellot on valmiit\" style=\"font-size:24px; color:red; text-align:center; transform: translate(-50%, -50%);\"\u003e\ud83d\udd25\u003c/div\u003e"});
+            marker_2d2b1a1f270d797a07ca2d45799dd7b8.setIcon(div_icon_77110deec41eaba05e5319a4ee7c85a0);
         
     
-        var popup_afa24f4e1e81d4f816f7b593f4256605 = L.popup({"maxWidth": 250});
+        var popup_bf2ba25494c4751ad51bfb7579162e9c = L.popup({"maxWidth": 250});
 
         
             
-                var html_07d9dc4dd3749438af6792c43ae2c9d4 = $(`<div id="html_07d9dc4dd3749438af6792c43ae2c9d4" style="width: 100.0%; height: 100.0%;">                 <b>Kaupunki:</b> Pori                 <br>                 <b>Paikka:</b> Porin helluntaiseurakunta                 <br>                 <b>Tiimi:</b> Pellot on valmiit                 <br>                                  <b>Päivä:</b> 2025-05-03                     <br>                 </div>`)[0];
-                popup_afa24f4e1e81d4f816f7b593f4256605.setContent(html_07d9dc4dd3749438af6792c43ae2c9d4);
+                var html_f2a8d246919ea80cd3f753fdb994fa28 = $(`<div id="html_f2a8d246919ea80cd3f753fdb994fa28" style="width: 100.0%; height: 100.0%;">                 <b>Kaupunki:</b> Pori                 <br>                 <b>Paikka:</b> Porin helluntaiseurakunta                 <br>                 <b>Tiimi:</b> Pellot on valmiit                 <br>                                  <b>Päivä:</b> 2025-05-03                     <br>                 </div>`)[0];
+                popup_bf2ba25494c4751ad51bfb7579162e9c.setContent(html_f2a8d246919ea80cd3f753fdb994fa28);
             
         
 
-        marker_89c0f8cfabbef22d96b39e5b4650a7ad.bindPopup(popup_afa24f4e1e81d4f816f7b593f4256605)
+        marker_2d2b1a1f270d797a07ca2d45799dd7b8.bindPopup(popup_bf2ba25494c4751ad51bfb7579162e9c)
         ;
 
         
     
     
-            feature_group_2b6ea4c7a28988bb93e306ad6dc51349.addTo(map_c55f07372709a34908e37f6702cf6ae1);
+            feature_group_61de84bc64c594e7bda1a43afa9ad886.addTo(map_58d9f7744fa711b193b9c0e5d1186d31);
         
     
-            var layer_control_29a1b453dc989174ccc96d4ccd570f76_layers = {
+            var layer_control_509f25b1acb81c8bcd8252cefc6e28ef_layers = {
                 base_layers : {
                 },
                 overlays :  {
-                    "Pellot on valmiit" : feature_group_2b6ea4c7a28988bb93e306ad6dc51349,
+                    "Pellot on valmiit" : feature_group_61de84bc64c594e7bda1a43afa9ad886,
                 },
             };
-            let layer_control_29a1b453dc989174ccc96d4ccd570f76 = L.control.layers(
-                layer_control_29a1b453dc989174ccc96d4ccd570f76_layers.base_layers,
-                layer_control_29a1b453dc989174ccc96d4ccd570f76_layers.overlays,
+            let layer_control_509f25b1acb81c8bcd8252cefc6e28ef = L.control.layers(
+                layer_control_509f25b1acb81c8bcd8252cefc6e28ef_layers.base_layers,
+                layer_control_509f25b1acb81c8bcd8252cefc6e28ef_layers.overlays,
                 {"autoZIndex": true, "collapsed": false, "position": "bottomleft"}
-            ).addTo(map_c55f07372709a34908e37f6702cf6ae1);
+            ).addTo(map_58d9f7744fa711b193b9c0e5d1186d31);
 
         
 </script>
